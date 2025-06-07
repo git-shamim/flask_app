@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>{% block title %}Shamim's Portfolio{% endblock %}</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/main.css') }}" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/custom.css') }}" />
+  <noscript><link rel="stylesheet" href="{{ url_for('static', filename='assets/css/noscript.css') }}" /></noscript>
+</head>
+<body class="is-preload">
+
+  <div id="wrapper">
+
+    {% block header %}
+    <!-- Default Header (used by most pages) -->
+    <header id="header" class="alt">
+      <a href="/" class="logo"><strong>Shamim</strong> <span>Portfolio</span></a>
+      <nav><a href="#menu">Menu</a></nav>
+    </header>
+    {% endblock %}
+
+    <!-- Menu -->
+    <nav id="menu">
+      <ul class="links">
+        <li><a href="/">Home</a></li>
+        <li><a href="/projects">Projects</a></li>
+        <li><a href="/playground">Playground</a></li>
+        <li><a href="/dashboards">Dashboards</a></li>
+        <li><a href="/blogs">Blogs</a></li>
+        <li><a href="/certifications">Certifications</a></li>
+        <li><a href="/hackathons">Hackathons</a></li>
+      </ul>
+    </nav>
+
+    {% block content %}{% endblock %}
+
+    <!-- Footer -->
+    <footer id="footer">
+      <div class="inner">
+        <ul class="icons">
+          <li><a href="https://www.linkedin.com/in/ahmedshamim/" class="icon brands alt fa-linkedin-in"><span class="label">LinkedIn</span></a></li>
+          <li><a href="https://github.com/git-shamim" class="icon brands alt fa-github"><span class="label">GitHub</span></a></li>
+          <li><a href="https://leetcode.com/u/git-shamim/" class="icon solid alt fa-code"><span class="label">LeetCode</span></a></li>
+          <li><a href="https://www.kaggle.com/shamimkaggle" class="icon solid alt fa-chart-bar"><span class="label">Kaggle</span></a></li>
+        </ul>
+        <ul class="copyright">
+          <li>&copy; Shamim Ahmed</li><li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
+        </ul>
+      </div>
+    </footer>
+
+  </div>
+
+  <!-- Scripts -->
+  <script src="{{ url_for('static', filename='assets/js/jquery.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='assets/js/jquery.scrolly.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='assets/js/jquery.scrollex.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='assets/js/browser.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='assets/js/breakpoints.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='assets/js/util.js') }}"></script>
+  <script src="{{ url_for('static', filename='assets/js/main.js') }}"></script>
+</body>
+</html>

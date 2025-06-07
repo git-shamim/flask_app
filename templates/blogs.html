@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+
+{% block title %}Blogs{% endblock %}
+
+{% block header %}
+<header id="header" class="alt style2">
+  <a href="/" class="logo"><strong>Shamim</strong> <span>Portfolio</span></a>
+  <nav><a href="#menu">Menu</a></nav>
+</header>
+{% endblock %}
+
+{% block content %}
+
+<!-- Banner -->
+<section id="banner" class="style2">
+  <div class="inner">
+    <span class="image">
+      <img src="{{ url_for('static', filename='images/banner.jpg') }}" alt="Banner" />
+    </span>
+    <header class="major">
+      <h1>Blogs</h1>
+    </header>
+    <div class="content">
+      <p>My reflections on Statistical tools, Machine Learning and AI.<br />Each post documents key concepts, lessons, and results.</p>
+    </div>
+  </div>
+</section>
+
+<!-- One -->
+<section id="one">
+  <div class="inner">
+    <header class="major">
+      <h2>Featured Articles</h2>
+    </header>
+    <p>Making the Complex Simple. These blogs document both the successes and failures I’ve learned from.</p>
+  </div>
+</section>
+
+<!-- Two -->
+<section id="two" class="spotlights">
+
+    <section>
+      <a href="https://medium.com/@shamim.ahmed2017/p-value-what-why-f5cc9f2894a0" class="image narrow" target="_blank">
+        <img src="{{ url_for('static', filename='images/blog1.jpg') }}" alt="" data-position="center center" />
+      </a>
+
+    <div class="content">
+      <div class="inner">
+        <header class="major">
+          <h3>What is a p-value?</h3>
+        </header>
+        <p>The p-value helps you decide whether the effect you observed is statistically significant or just happened by random chance. The p-value gives you a number between 0 and 1 that tells you how surprising your results are.</p>
+        <ul class="actions">
+          <li><a href="https://medium.com/@shamim.ahmed2017/p-value-what-why-f5cc9f2894a0" class="button" target="_blank">Learn more</a></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+
+</section>
+
+<!-- More to Come Section -->
+<section id="three">
+  <div class="inner">
+    <header class="major">
+      <h2>More Coming Soon</h2>
+    </header>
+    <p>New blog posts are in the works — from GenAI experiments to platform playbooks, stay tuned for more practical product and data insights.</p>
+  </div>
+</section>
+
+
+{% endblock %}

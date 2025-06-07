@@ -1,0 +1,28 @@
+/* General override for tighter, centered spotlight layout */
+.spotlights.style1 > section > .content > .inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 3em 2em;
+}
+
+/* Optional: tighter image scaling */
+.spotlights.style1 > section > .image img {
+  object-fit: cover;
+  width: 100%;
+  height: auto;
+}
+
+/* Optional: center section titles more cleanly */
+section#one .inner,
+section#three .inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 3em 2em;
+}
+
+.image.narrow {
+  max-width: 60%;
+  margin: 0 auto;
+  display: block;
+}
+

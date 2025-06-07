@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+
+{% block title %}Playground{% endblock %}
+
+{% block header %}
+<header id="header" class="alt style2">
+  <a href="/" class="logo"><strong>Shamim</strong> <span>Portfolio</span></a>
+  <nav><a href="#menu">Menu</a></nav>
+</header>
+{% endblock %}
+
+{% block content %}
+
+<!-- Banner -->
+<section id="banner" class="style2">
+  <div class="inner">
+    <span class="image">
+      <img src="{{ url_for('static', filename='images/banner.jpg') }}" alt="Banner" />
+    </span>
+    <header class="major">
+      <h1>Playground</h1>
+    </header>
+    <div class="content">
+      <p>Experiment zone for AI/ML demos and prototypes.<br />Test ideas. Break things. Learn fast.</p>
+    </div>
+  </div>
+</section>
+
+<!-- One -->
+<section id="one">
+  <div class="inner">
+    <header class="major">
+      <h2>Interactive Experiments</h2>
+    </header>
+    <p>Explore prototypes, test models in action, or interact with micro-projects. Each playground is a step toward bigger, production-ready solutions.</p>
+  </div>
+</section>
+
+<!-- Two -->
+<section id="two" class="spotlights">
+
+  <section>
+    <a href="https://shamimtitanic.streamlit.app" class="image narrow" target="_blank">
+      <img src="{{ url_for('static', filename='images/playground1.jpg') }}" alt="" data-position="center center" />
+    </a>
+    <div class="content">
+      <div class="inner">
+        <header class="major">
+          <h3>Titanic Survival Predictor</h3>
+        </header>
+        <p>Built using Streamlit, this app predicts survival on the Titanic based on gender, age, fare, and class. It also visualizes survival patterns using the original dataset.</p>
+        <ul class="actions">
+          <li><a href="https://shamimtitanic.streamlit.app" class="button" target="_blank">Try it now</a></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+</section>
+
+<!-- More to Come Section -->
+<section id="three">
+  <div class="inner">
+    <header class="major">
+      <h2>More Experiments Ahead</h2>
+    </header>
+    <p>From LLM playgrounds to anomaly detection tests — this section will be constantly evolving as I continue experimenting with cutting-edge ideas.</p>
+  </div>
+</section>
+
+{% endblock %}
