@@ -1,181 +1,129 @@
-<!DOCTYPE HTML>
-<html>
-<head>
-  <title>Shamim by HTML5 UP</title>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-  <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/main.css') }}" />
-  <noscript><link rel="stylesheet" href="{{ url_for('static', filename='assets/css/noscript.css') }}" /></noscript>
-</head>
-<body class="is-preload">
-  <div id="wrapper">
+{% extends "base.html" %}
 
-    <!-- Header -->
-    <header id="header" class="alt">
-      <a href="/" class="logo"><strong>Shamim</strong> <span>by HTML5 UP</span></a>
-      <nav><a href="#menu">Menu</a></nav>
+{% block title %}Shamim's Portfolio – Home{% endblock %}
+
+{% block content %}
+<!-- Banner -->
+<section id="banner" class="major">
+  <div class="inner">
+    <header class="major">
+      <h1>Hi, my name is Shamim</h1>
     </header>
-
-    <!-- Menu -->
-    <nav id="menu">
-      <ul class="links">
-        <li><a href="/">Home</a></li>
-        <li><a href="/projects">Projects</a></li>
-        <li><a href="/playground">Playground</a></li>
-        <li><a href="/dashboards">Dashboards</a></li>
-        <li><a href="/blogs">Blogs</a></li>
-        <li><a href="/certifications">Certifications</a></li>
-        <li><a href="/hackathons">Hackathons</a></li>
-      </ul>
-    </nav>
-
-    <!-- Banner -->
-    <section id="banner" class="major">
-      <div class="inner">
-        <header class="major">
-          <h1>Hi, my name is Shamim</h1>
-        </header>
-        <div class="content">
-          <p>By profession, a Product Manager for Auction Platforms.<br />
-          By passion, a data science enthusiast.</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- Main -->
-    <div id="main">
-      <!-- Tiles -->
-      <section id="one" class="tiles">
-        <article>
-          <span class="image"><img src="{{ url_for('static', filename='images/pic01.jpg') }}" alt="" /></span>
-          <header class="major">
-            <h3><a href="/projects" class="link">Projects</a></h3>
-            <p>AI/ML projects</p>
-          </header>
-        </article>
-        <article>
-          <span class="image"><img src="{{ url_for('static', filename='images/pic02.jpg') }}" alt="" /></span>
-          <header class="major">
-            <h3><a href="/playground" class="link">Playground</a></h3>
-            <p>Try out inferences</p>
-          </header>
-        </article>
-        <article>
-          <span class="image"><img src="{{ url_for('static', filename='images/pic03.jpg') }}" alt="" /></span>
-          <header class="major">
-            <h3><a href="/dashboards" class="link">Dashboards</a></h3>
-            <p>BI tools and visualisation</p>
-          </header>
-        </article>
-        <article>
-          <span class="image"><img src="{{ url_for('static', filename='images/pic04.jpg') }}" alt="" /></span>
-          <header class="major">
-            <h3><a href="/blogs" class="link">Blogs</a></h3>
-            <p>My blogs & posts</p>
-          </header>
-        </article>
-        <article>
-          <span class="image"><img src="{{ url_for('static', filename='images/pic05.jpg') }}" alt="" /></span>
-          <header class="major">
-            <h3><a href="/certifications" class="link">Certifications</a></h3>
-            <p>Path to knowledge</p>
-          </header>
-        </article>
-        <article>
-          <span class="image"><img src="{{ url_for('static', filename='images/pic06.jpg') }}" alt="" /></span>
-          <header class="major">
-            <h3><a href="/hackathons" class="link">Hackathons</a></h3>
-            <p>Use cases & submissions</p>
-          </header>
-        </article>
-      </section>
-
-      <!-- About -->
-      <section id="two">
-        <div class="inner">
-          <header class="major">
-            <h2>About me</h2>
-          </header>
-          <p>I’m a Product Manager with over 20 years of experience—starting in banking and finance and then transitioning to ITES, where I taught myself programming, data science, cloud services, and BI tools. Today, I lead our auction‐platform product while still dedicating my free time to AI/ML and data‐science projects.</p>
-        </div>
-      </section>
+    <div class="content">
+      <p>By profession, a Product Manager for Auction Platforms.<br />
+      By passion, a data science enthusiast.</p>
     </div>
+  </div>
+</section>
 
-    <!-- Contact -->
-    <section id="contact">
-      <div class="inner">
-        <section>
-          <form method="post" action="#">
-            <div class="fields">
-              <div class="field half">
-                <label for="name">Name</label>
-                <input type="text" name="name" id="name" />
-              </div>
-              <div class="field half">
-                <label for="email">Email</label>
-                <input type="text" name="email" id="email" />
-              </div>
-              <div class="field">
-                <label for="message">Message</label>
-                <textarea name="message" id="message" rows="6"></textarea>
-              </div>
-            </div>
-            <ul class="actions">
-              <li><input type="submit" value="Send Message" class="primary" /></li>
-              <li><input type="reset" value="Clear" /></li>
-            </ul>
-          </form>
-        </section>
-        <section class="split">
-          <section>
-            <div class="contact-method">
-              <span class="icon solid alt fa-envelope"></span>
-              <h3>Email</h3>
-              <a href="#">shamim.ahmed2017@icloud.com</a>
-            </div>
-          </section>
-          <section>
-            <div class="contact-method">
-              <span class="icon solid alt fa-phone"></span>
-              <h3>Phone</h3>
-              <span>(+91) 9836125552</span>
-            </div>
-          </section>
-          <section>
-            <div class="contact-method">
-              <span class="icon solid alt fa-home"></span>
-              <h3>Address</h3>
-              <span>Kolkata 700104<br />West Bengal, India</span>
-            </div>
-          </section>
-        </section>
-      </div>
+<!-- Main -->
+<div id="main">
+  <!-- Tiles -->
+  <section id="one" class="tiles">
+    <article>
+      <span class="image"><img src="{{ url_for('static', filename='images/pic01.jpg') }}" alt="" /></span>
+      <header class="major">
+        <h3><a href="/projects" class="link">Projects</a></h3>
+        <p>AI/ML projects</p>
+      </header>
+    </article>
+    <article>
+      <span class="image"><img src="{{ url_for('static', filename='images/pic02.jpg') }}" alt="" /></span>
+      <header class="major">
+        <h3><a href="/playground" class="link">Playground</a></h3>
+        <p>Try out inferences</p>
+      </header>
+    </article>
+    <article>
+      <span class="image"><img src="{{ url_for('static', filename='images/pic03.jpg') }}" alt="" /></span>
+      <header class="major">
+        <h3><a href="/dashboards" class="link">Dashboards</a></h3>
+        <p>BI tools and visualisation</p>
+      </header>
+    </article>
+    <article>
+      <span class="image"><img src="{{ url_for('static', filename='images/pic04.jpg') }}" alt="" /></span>
+      <header class="major">
+        <h3><a href="/blogs" class="link">Blogs</a></h3>
+        <p>My blogs & posts</p>
+      </header>
+    </article>
+    <article>
+      <span class="image"><img src="{{ url_for('static', filename='images/pic05.jpg') }}" alt="" /></span>
+      <header class="major">
+        <h3><a href="/certifications" class="link">Certifications</a></h3>
+        <p>Path to knowledge</p>
+      </header>
+    </article>
+    <article>
+      <span class="image"><img src="{{ url_for('static', filename='images/pic06.jpg') }}" alt="" /></span>
+      <header class="major">
+        <h3><a href="/hackathons" class="link">Hackathons</a></h3>
+        <p>Use cases & submissions</p>
+      </header>
+    </article>
+  </section>
+
+  <!-- About -->
+  <section id="two">
+    <div class="inner">
+      <header class="major">
+        <h2>About me</h2>
+      </header>
+      <p>I’m a Product Manager with over 20 years of experience—starting in banking and finance and then transitioning to ITES, where I taught myself programming, data science, cloud services, and BI tools. Today, I lead our auction‐platform product while still dedicating my free time to AI/ML and data‐science projects.</p>
+    </div>
+  </section>
+</div>
+
+<!-- Contact -->
+<section id="contact">
+  <div class="inner">
+    <section>
+      <form method="post" action="/submit_contact#contact">
+        <div class="fields">
+          <div class="field half">
+            <label for="name">Name</label>
+            <input type="text" name="name" id="name" required />
+          </div>
+          <div class="field half">
+            <label for="email">Email</label>
+            <input type="email" name="email" id="email" required />
+          </div>
+          <div class="field">
+            <label for="message">Message</label>
+            <textarea name="message" id="message" rows="6"></textarea>
+          </div>
+        </div>
+        <ul class="actions">
+          <li><input type="submit" value="Send Message" class="primary" /></li>
+          <li><input type="reset" value="Clear" /></li>
+        </ul>
+      </form>
     </section>
 
-    <!-- Footer -->
-    <footer id="footer">
-      <div class="inner">
-        <ul class="icons">
-          <li><a href="https://www.linkedin.com/in/ahmedshamim/" target="_blank" class="icon brands alt fa-linkedin-in"><span class="label">LinkedIn</span></a></li>
-          <li><a href="https://github.com/git-shamim" target="_blank" class="icon brands alt fa-github"><span class="label">GitHub</span></a></li>
-          <li><a href="https://leetcode.com/u/git-shamim/" target="_blank" class="icon solid alt fa-code"><span class="label">LeetCode</span></a></li>
-          <li><a href="https://www.kaggle.com/shamimkaggle" target="_blank" class="icon solid alt fa-chart-bar"><span class="label">Kaggle</span></a></li>
-        </ul>
-        <ul class="copyright">
-          <li>&copy; Shamim Ahmed</li><li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
-        </ul>
-      </div>
-    </footer>
-
+    <section class="split">
+      <section>
+        <div class="contact-method">
+          <span class="icon solid alt fa-envelope"></span>
+          <h3>Email</h3>
+          <a href="#">shamim.ahmed2017@icloud.com</a>
+        </div>
+      </section>
+      <section>
+        <div class="contact-method">
+          <span class="icon solid alt fa-phone"></span>
+          <h3>Phone</h3>
+          <span>(+91) 9836125552</span>
+        </div>
+      </section>
+      <section>
+        <div class="contact-method">
+          <span class="icon solid alt fa-home"></span>
+          <h3>Address</h3>
+          <span>Kolkata 700104<br />West Bengal, India</span>
+        </div>
+      </section>
+    </section>
   </div>
-
-  <!-- Scripts -->
-  <script src="{{ url_for('static', filename='assets/js/jquery.min.js') }}"></script>
-  <script src="{{ url_for('static', filename='assets/js/jquery.scrolly.min.js') }}"></script>
-  <script src="{{ url_for('static', filename='assets/js/jquery.scrollex.min.js') }}"></script>
-  <script src="{{ url_for('static', filename='assets/js/browser.min.js') }}"></script>
-  <script src="{{ url_for('static', filename='assets/js/breakpoints.min.js') }}"></script>
-  <script src="{{ url_for('static', filename='assets/js/util.js') }}"></script>
-  <script src="{{ url_for('static', filename='assets/js/main.js') }}"></script>
-</body>
-</html>
+</section>
+{% endblock %}

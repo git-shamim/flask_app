@@ -45,12 +45,46 @@
           <li><a href="https://www.kaggle.com/shamimkaggle" class="icon solid alt fa-chart-bar"><span class="label">Kaggle</span></a></li>
         </ul>
         <ul class="copyright">
-          <li>&copy; Shamim Ahmed</li><li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
+          <li>&copy; Shamim Ahmed</li>
         </ul>
       </div>
     </footer>
 
   </div>
+
+  <!-- Floating Flash Messages -->
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      <div class="floating-flash-wrapper">
+        {% for category, message in messages %}
+          <div class="floating-flash flash-{{ category }}">{{ message }}</div>
+        {% endfor %}
+      </div>
+    {% endif %}
+  {% endwith %}
+
+  <script>
+    // Scroll to #contact if flash exists
+    window.addEventListener("load", () => {
+      const flash = document.querySelector(".floating-flash");
+      if (flash) {
+        const contactSection = document.getElementById("contact");
+        if (contactSection) {
+          contactSection.scrollIntoView({ behavior: "smooth", block: "start" });
+        }
+      }
+    });
+
+    // Auto-dismiss after 4 seconds
+    setTimeout(() => {
+      const flash = document.querySelector(".floating-flash");
+      if (flash) {
+        flash.style.opacity = "0";
+        setTimeout(() => flash.remove(), 600);
+      }
+    }, 4000);
+  </script>
+
 
   <!-- Scripts -->
   <script src="{{ url_for('static', filename='assets/js/jquery.min.js') }}"></script>
