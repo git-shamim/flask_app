@@ -34,10 +34,7 @@ def hackathons():
     return render_template('hackathons.html')
 
 
+# ✅ Single main entry point for local + Cloud Run
 if __name__ == '__main__':
-    app.run(debug=True)
-
-
-if __name__ == '__main__':
-    port = int(os.environ.get("PORT", 8080))  # ✅ Default to 8080 if PORT not set
-    app.run(host='0.0.0.0', port=port)        # ✅ Required for Cloud Run
+    port = int(os.environ.get("PORT", 8080))  # Use Cloud Run's expected port
+    app.run(host='0.0.0.0', port=port)        # Accessible externally
