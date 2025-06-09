@@ -3,3 +3,4 @@ Flask_SQLAlchemy==3.0.5
 google-cloud-secret-manager==2.16.2
 python-dotenv==1.0.1
 google-cloud-bigquery
+gunicorn
