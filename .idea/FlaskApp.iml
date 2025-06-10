@@ -1,7 +1,71 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module type="PYTHON_MODULE" version="4">
   <component name="NewModuleRootManager">
-    <content url="file://$MODULE_DIR$" />
+    <content url="file://$MODULE_DIR$">
+      <excludeFolder url="file://$MODULE_DIR$/venv-flask" />
+      <excludeFolder url="file://$MODULE_DIR$/venv/etc" />
+      <excludeFolder url="file://$MODULE_DIR$/venv/include/python3.12" />
+      <excludeFolder url="file://$MODULE_DIR$/venv/lib/python3.12/site-packages/GitPython-3.1.44.dist-info" />
+      <excludeFolder url="file://$MODULE_DIR$/venv/lib/python3.12/site-packages/PIL" />
+      <excludeFolder url="file://$MODULE_DIR$/venv/lib/python3.12/site-packages/altair" />
+      <excludeFolder url="file://$MODULE_DIR$/venv/lib/python3.12/site-packages/altair-5.5.0.dist-info" />
+      <excludeFolder url="file://$MODULE_DIR$/venv/lib/python3.12/site-packages/attr" />
+      <excludeFolder url="file://$MODULE_DIR$/venv/lib/python3.12/site-packages/attrs" />
+      <excludeFolder url="file://$MODULE_DIR$/venv/lib/python3.12/site-packages/attrs-25.3.0.dist-info" />
+      <excludeFolder url="file://$MODULE_DIR$/venv/lib/python3.12/site-packages/blinker" />
+      <excludeFolder url="file://$MODULE_DIR$/venv/lib/python3.12/site-packages/blinker-1.9.0.dist-info" />
+      <excludeFolder url="file://$MODULE_DIR$/venv/lib/python3.12/site-packages/git" />
+      <excludeFolder url="file://$MODULE_DIR$/venv/lib/python3.12/site-packages/gitdb" />
+      <excludeFolder url="file://$MODULE_DIR$/venv/lib/python3.12/site-packages/gitdb-4.0.12.dist-info" />
+      <excludeFolder url="file://$MODULE_DIR$/venv/lib/python3.12/site-packages/gunicorn" />
+      <excludeFolder url="file://$MODULE_DIR$/venv/lib/python3.12/site-packages/gunicorn-23.0.0.dist-info" />
+      <excludeFolder url="file://$MODULE_DIR$/venv/lib/python3.12/site-packages/jsonschema" />
+      <excludeFolder url="file://$MODULE_DIR$/venv/lib/python3.12/site-packages/jsonschema-4.24.0.dist-info" />
+      <excludeFolder url="file://$MODULE_DIR$/venv/lib/python3.12/site-packages/jsonschema_specifications" />
+      <excludeFolder url="file://$MODULE_DIR$/venv/lib/python3.12/site-packages/jsonschema_specifications-2025.4.1.dist-info" />
+      <excludeFolder url="file://$MODULE_DIR$/venv/lib/python3.12/site-packages/markdown_it" />
+      <excludeFolder url="file://$MODULE_DIR$/venv/lib/python3.12/site-packages/markdown_it_py-3.0.0.dist-info" />
+      <excludeFolder url="file://$MODULE_DIR$/venv/lib/python3.12/site-packages/mdurl" />
+      <excludeFolder url="file://$MODULE_DIR$/venv/lib/python3.12/site-packages/mdurl-0.1.2.dist-info" />
+      <excludeFolder url="file://$MODULE_DIR$/venv/lib/python3.12/site-packages/narwhals" />
+      <excludeFolder url="file://$MODULE_DIR$/venv/lib/python3.12/site-packages/narwhals-1.42.0.dist-info" />
+      <excludeFolder url="file://$MODULE_DIR$/venv/lib/python3.12/site-packages/numpy" />
+      <excludeFolder url="file://$MODULE_DIR$/venv/lib/python3.12/site-packages/numpy-1.26.4.dist-info" />
+      <excludeFolder url="file://$MODULE_DIR$/venv/lib/python3.12/site-packages/packaging-24.2.dist-info" />
+      <excludeFolder url="file://$MODULE_DIR$/venv/lib/python3.12/site-packages/packaging/__pycache__ 2" />
+      <excludeFolder url="file://$MODULE_DIR$/venv/lib/python3.12/site-packages/packaging/licenses 2" />
+      <excludeFolder url="file://$MODULE_DIR$/venv/lib/python3.12/site-packages/pandas" />
+      <excludeFolder url="file://$MODULE_DIR$/venv/lib/python3.12/site-packages/pandas-2.3.0.dist-info" />
+      <excludeFolder url="file://$MODULE_DIR$/venv/lib/python3.12/site-packages/pillow-10.4.0.dist-info" />
+      <excludeFolder url="file://$MODULE_DIR$/venv/lib/python3.12/site-packages/pip/__pycache__ 2" />
+      <excludeFolder url="file://$MODULE_DIR$/venv/lib/python3.12/site-packages/pip/_internal 2" />
+      <excludeFolder url="file://$MODULE_DIR$/venv/lib/python3.12/site-packages/pip/_vendor 2" />
+      <excludeFolder url="file://$MODULE_DIR$/venv/lib/python3.12/site-packages/pyarrow" />
+      <excludeFolder url="file://$MODULE_DIR$/venv/lib/python3.12/site-packages/pyarrow-20.0.0.dist-info" />
+      <excludeFolder url="file://$MODULE_DIR$/venv/lib/python3.12/site-packages/pydeck" />
+      <excludeFolder url="file://$MODULE_DIR$/venv/lib/python3.12/site-packages/pydeck-0.9.1.dist-info" />
+      <excludeFolder url="file://$MODULE_DIR$/venv/lib/python3.12/site-packages/pygments" />
+      <excludeFolder url="file://$MODULE_DIR$/venv/lib/python3.12/site-packages/pygments-2.19.1.dist-info" />
+      <excludeFolder url="file://$MODULE_DIR$/venv/lib/python3.12/site-packages/pytz" />
+      <excludeFolder url="file://$MODULE_DIR$/venv/lib/python3.12/site-packages/pytz-2025.2.dist-info" />
+      <excludeFolder url="file://$MODULE_DIR$/venv/lib/python3.12/site-packages/referencing" />
+      <excludeFolder url="file://$MODULE_DIR$/venv/lib/python3.12/site-packages/referencing-0.36.2.dist-info" />
+      <excludeFolder url="file://$MODULE_DIR$/venv/lib/python3.12/site-packages/rich" />
+      <excludeFolder url="file://$MODULE_DIR$/venv/lib/python3.12/site-packages/rich-13.9.4.dist-info" />
+      <excludeFolder url="file://$MODULE_DIR$/venv/lib/python3.12/site-packages/rpds" />
+      <excludeFolder url="file://$MODULE_DIR$/venv/lib/python3.12/site-packages/rpds_py-0.25.1.dist-info" />
+      <excludeFolder url="file://$MODULE_DIR$/venv/lib/python3.12/site-packages/smmap" />
+      <excludeFolder url="file://$MODULE_DIR$/venv/lib/python3.12/site-packages/smmap-5.0.2.dist-info" />
+      <excludeFolder url="file://$MODULE_DIR$/venv/lib/python3.12/site-packages/tenacity" />
+      <excludeFolder url="file://$MODULE_DIR$/venv/lib/python3.12/site-packages/tenacity-8.5.0.dist-info" />
+      <excludeFolder url="file://$MODULE_DIR$/venv/lib/python3.12/site-packages/toml" />
+      <excludeFolder url="file://$MODULE_DIR$/venv/lib/python3.12/site-packages/toml-0.10.2.dist-info" />
+      <excludeFolder url="file://$MODULE_DIR$/venv/lib/python3.12/site-packages/tornado" />
+      <excludeFolder url="file://$MODULE_DIR$/venv/lib/python3.12/site-packages/tornado-6.5.1.dist-info" />
+      <excludeFolder url="file://$MODULE_DIR$/venv/lib/python3.12/site-packages/tzdata" />
+      <excludeFolder url="file://$MODULE_DIR$/venv/lib/python3.12/site-packages/tzdata-2025.2.dist-info" />
+      <excludeFolder url="file://$MODULE_DIR$/venv/share" />
+    </content>
     <orderEntry type="jdk" jdkName="Python 3.12" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
   </component>

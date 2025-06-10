@@ -10,7 +10,10 @@ def load_secrets(local=False):
     if local:
         return {
             "DATABASE_URL": os.getenv("DATABASE_URL", ""),
-            "SECRET_KEY": os.getenv("SECRET_KEY", "dev-secret")
+            "SECRET_KEY": os.getenv("SECRET_KEY", "dev-secret"),
+            "BQ_PROJECT_ID": os.getenv("BQ_PROJECT_ID", ""),
+            "BQ_DATASET": os.getenv("BQ_DATASET", ""),
+            "BQ_TABLE": os.getenv("BQ_TABLE", "")
         }
 
     project_id = os.environ.get("GOOGLE_CLOUD_PROJECT")
@@ -33,6 +36,9 @@ def load_secrets(local=False):
             raise RuntimeError(f"❌ Failed to retrieve secret '{secret_id}': {str(e)}")
 
     return {
-        "DATABASE_URL": get_secret("flask-database-url"),
-        "SECRET_KEY": get_secret("flask-secret-key")
+        "DATABASE_URL": "",  # ignored on GCP
+        "SECRET_KEY": get_secret("flask-secret-key"),
+        "BQ_PROJECT_ID": get_secret("bq-project-id"),
+        "BQ_DATASET": get_secret("bq-dataset"),
+        "BQ_TABLE": get_secret("bq-table")
     }

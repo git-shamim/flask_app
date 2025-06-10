@@ -1,2 +1,6 @@
+venv/
+__pycache__/
+*.pyc
+*.db
 .env
-venv-flask
+.DS_Store
