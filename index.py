@@ -3,8 +3,12 @@ from dotenv import load_dotenv
 from secrets_loader import load_secrets
 import os
 from datetime import datetime
-
 from models import db, Contact
+import logging
+
+logging.basicConfig(level=logging.INFO)
+
+
 
 # Load environment variables
 load_dotenv()
@@ -85,14 +89,15 @@ def submit_contact():
             "message": message,
             "submitted_at": datetime.utcnow().isoformat()
         }]
+        logging.warning(f"📤 Attempting BigQuery insert: {row}")
         errors = bq_client.insert_rows_json(table_id, row)
         if errors:
-            # flash("❌ Failed to submit message. Try again.", "error")
-            # return redirect('/#contact')
-            import logging
-            logging.warning(f"❌ BigQuery insertion failed: {errors}")
+            logging.error(f"❌ BigQuery insertion failed: {errors}")
             flash("❌ Failed to submit message. Try again.", "error")
-            return redirect('/#contact')
+        else:
+            logging.warning(f"✅ BigQuery insertion succeeded with no errors.")
+            flash("Thanks! Your message was received.", "success")
+        return redirect('/#contact')
 
 
     flash("Thanks! Your message was received.", "success")
