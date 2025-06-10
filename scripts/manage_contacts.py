@@ -1,9 +1,17 @@
-# scripts/manage_contacts.py
+#!/usr/bin/env python3
+"""
+scripts/manage_contacts.py
+
+CLI to list and manage Contact entries in the PostgreSQL database.
+"""
+import os
+from dotenv import load_dotenv
+
+# Load environment variables from .env (for local) or from Cloud Run env
+load_dotenv()
 
 import sys
-import os
-
-# Add project root to sys.path
+# Add project root to sys.path so we can import index and models
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 from index import app
@@ -11,6 +19,7 @@ from models import db, Contact
 
 
 def list_contacts():
+    """Fetch and display all contacts."""
     contacts = Contact.query.all()
     if not contacts:
         print("📭 No contact entries found.")
@@ -18,11 +27,13 @@ def list_contacts():
 
     print("\n📋 Current Contact Entries:")
     for c in contacts:
-        print(f"[{c.id}] {c.name} | {c.email} | {c.message[:50]}")
+        snippet = c.message[:50] + ('...' if len(c.message) > 50 else '')
+        print(f"[{c.id}] {c.name} | {c.email} | {snippet}")
     return contacts
 
 
 def delete_all():
+    """Delete all contact entries after confirmation."""
     confirm = input("⚠️  Are you sure you want to delete ALL contact entries? (yes/no): ").strip().lower()
     if confirm == 'yes':
         Contact.query.delete()
@@ -33,6 +44,7 @@ def delete_all():
 
 
 def delete_by_email_or_id():
+    """Delete a single contact by ID or email."""
     choice = input("Delete by (1) ID or (2) Email? Enter 1 or 2: ").strip()
 
     if choice == '1':
@@ -63,7 +75,11 @@ def delete_by_email_or_id():
 
 
 def main():
+    """Entry point: create tables and show management menu."""
     with app.app_context():
+        # Ensure tables exist
+        db.create_all()
+
         contacts = list_contacts()
         if not contacts:
             print("👋 Exiting.")
