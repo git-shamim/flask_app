@@ -87,8 +87,13 @@ def submit_contact():
         }]
         errors = bq_client.insert_rows_json(table_id, row)
         if errors:
+            # flash("❌ Failed to submit message. Try again.", "error")
+            # return redirect('/#contact')
+            import logging
+            logging.warning(f"❌ BigQuery insertion failed: {errors}")
             flash("❌ Failed to submit message. Try again.", "error")
             return redirect('/#contact')
+
 
     flash("Thanks! Your message was received.", "success")
     return redirect('/#contact')
