@@ -18,8 +18,8 @@ app.config.update(load_config())
 # Initialize the database
 db.init_app(app)
 
-@app.before_first_request
-def create_tables():
+# Ensure tables exists on startup
+with app.app_context():
     db.create_all()
 
 # ─── ROUTES ───────────────────────────────────────────────────────────────
