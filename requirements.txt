@@ -1,5 +1,5 @@
 # Web
-Flask>=2.2.5
+Flask>=2.3.3
 Flask-SQLAlchemy>=3.0.5
 gunicorn>=23.0.0
 

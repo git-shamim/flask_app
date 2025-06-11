@@ -1,9 +1,15 @@
+# ignore Python virtual environments
+venv-flask/
 venv/
+
 __pycache__/
+*.py[cod]
 *.pyc
-*.db
 .env
+*.db
 .DS_Store
 
 # ignore SQLite fallback
 instance/
+
+
