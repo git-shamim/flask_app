@@ -26,5 +26,5 @@ RUN pip install --upgrade pip \
 EXPOSE $PORT
 
 # Run Flask app using Gunicorn
-CMD ["gunicorn", "--bind", "0.0.0.0:$8080", "index:app"]
+CMD ["gunicorn", "--bind", "0.0.0.0:8080", "index:app"]
 
