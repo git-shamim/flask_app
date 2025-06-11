@@ -1,11 +1,12 @@
-# Web
-Flask>=2.3.3
-Flask-SQLAlchemy>=3.0.5
-gunicorn
+# Web framework
+Flask>=2.3,<3.0
+Flask-SQLAlchemy>=3.0,<4.0
 
-# Database
-SQLAlchemy>=2.0.41
-psycopg2-binary>=2.9.0
+# WSGI server
+gunicorn>=20.1,<21.0
 
-# Environment
-python-dotenv>=1.0.1
+# Database driver
+psycopg2-binary>=2.9,<3.0
+
+# Environment (local only)
+python-dotenv>=1.0,<2.0

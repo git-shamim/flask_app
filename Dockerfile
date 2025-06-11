@@ -1,30 +1,41 @@
-# Use an official Python runtime as a parent image
-FROM python:3.10-slim
+# ─── Stage 1: Build dependencies ─────────────────────────────────────────────
+FROM python:3.12-slim AS builder
 
-# Set environment variables
+# Prevent Python from writing .pyc files and enable unbuffered logging
 ENV PYTHONDONTWRITEBYTECODE=1 \
-    PYTHONUNBUFFERED=1 \
-    PORT=8080
+    PYTHONUNBUFFERED=1
 
-# Set working directory
 WORKDIR /app
 
-# Install system dependencies
-RUN apt-get update && apt-get install -y --no-install-recommends \
-    gcc \
-    libpq-dev \
- && rm -rf /var/lib/apt/lists/*
+# Install only Python dependencies (no gcc/libpq-dev needed for psycopg2-binary)
+COPY requirements.txt .
+RUN pip install --upgrade pip \
+    && pip install --no-cache-dir -r requirements.txt
 
-# Copy project files
+# ─── Stage 2: Final image ────────────────────────────────────────────────────
+FROM python:3.12-slim
+
+# Declare environment variables
+ENV PORT=8080 \
+    PYTHONUNBUFFERED=1
+
+WORKDIR /app
+
+# Copy installed Python packages from the builder stage
+COPY --from=builder /usr/local/lib/python3.12/site-packages /usr/local/lib/python3.12/site-packages
+COPY --from=builder /usr/local/bin /usr/local/bin
+
+# Copy application code
 COPY . .
 
-# Install Python dependencies
-RUN pip install --upgrade pip \
- && pip install --no-cache-dir -r requirements.txt
+# Create and switch to non-root user
+RUN addgroup --system appgroup \
+ && adduser  --system --ingroup appgroup appuser \
+ && chown -R appuser:appgroup /app
+USER appuser
 
-# Expose port used by the app
-EXPOSE $PORT
+# Expose the application port
+EXPOSE ${PORT}
 
-# Run Flask app using Gunicorn
+# Start the app with Gunicorn
 CMD ["gunicorn", "--bind", "0.0.0.0:8080", "index:app"]
-

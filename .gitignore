@@ -15,4 +15,4 @@ instance/
 # SQLite runtime
 /instance/local.db
 /scripts/app.db
-
+/app.db
