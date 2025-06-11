@@ -12,4 +12,7 @@ __pycache__/
 # ignore SQLite fallback
 instance/
 
+# SQLite runtime
+/instance/local.db
+/scripts/app.db
 

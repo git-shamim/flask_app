@@ -4,25 +4,25 @@ from flask import Flask, render_template, request, redirect, flash
 from models import db, Contact
 from secrets_loader import load_config
 
-# ─── Setup Logging ──────────────────────────────────────────────────────────
+# Setup logging
 logging.basicConfig(level=logging.INFO)
 
-# ─── Flask App Initialization ───────────────────────────────────────────────
+# Flask app initialization
 app = Flask(__name__)
 app.config.update(load_config())
 
-# ─── Initialize Database (Cloud SQL) ────────────────────────────────────────
+# Initialize SQLAlchemy
 db.init_app(app)
 
-@app.before_first_request
-def initialize_database():
+# Always create or verify tables on startup
+with app.app_context():
     try:
         db.create_all()
-        app.logger.info("✅ Tables created in Cloud SQL")
+        app.logger.info("Tables created or already exist")
     except Exception as e:
-        app.logger.error(f"❌ Could not create tables: {e}")
+        app.logger.error(f"Could not create tables: {e}")
 
-# ─── ROUTES ──────────────────────────────────────────────────────────────────
+# Define routes
 @app.route('/')
 def home():
     return render_template('index.html')
@@ -73,7 +73,7 @@ def submit_contact():
 
     return redirect('/#contact')
 
-# ─── Main Entrypoint ─────────────────────────────────────────────────────────
+# Main entrypoint
 if __name__ == '__main__':
     port = int(os.environ.get("PORT", 8080))
     app.run(host='0.0.0.0', port=port)
