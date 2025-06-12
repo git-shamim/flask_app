@@ -1,6 +1,9 @@
 # Web framework
 Flask>=2.3,<3.0
 Flask-SQLAlchemy>=3.0,<4.0
+Flask-Migrate>=3.1,<5.0
+alembic>=1.7,<2.0
+
 
 # WSGI server
 gunicorn>=20.1,<21.0
@@ -10,3 +13,5 @@ psycopg2-binary>=2.9,<3.0
 
 # Environment (local only)
 python-dotenv>=1.0,<2.0
+
+

@@ -3,6 +3,7 @@ import logging
 from flask import Flask, render_template, request, redirect, flash
 from models import db, Contact
 from secrets_loader import load_config
+from flask_migrate import Migrate
 
 # Setup logging
 logging.basicConfig(level=logging.INFO)
@@ -13,6 +14,9 @@ app.config.update(load_config())
 
 # Initialize SQLAlchemy
 db.init_app(app)
+
+# ─── Migrations ─────────────────────────────────────────────────────────────
+migrate = Migrate(app, db)
 
 # Ensure tables exist on startup
 with app.app_context():
