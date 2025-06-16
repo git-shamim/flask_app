@@ -1,8 +1,126 @@
 {% extends 'base.html' %}
 
 {% block title %}Projects{% endblock %}
-{% block header %}Projects{% endblock %}
+
+{% block header %}
+<header id="header" class="alt style2">
+  <a href="/" class="logo"><strong>Shamim</strong> <span>Portfolio</span></a>
+  <nav><a href="#menu">Menu</a></nav>
+</header>
+{% endblock %}
 
 {% block content %}
-<p>Explore AI/ML use cases, cloud-native pipelines, and data automation solutions.</p>
+
+<!-- Banner -->
+<section id="banner" class="style2">
+  <div class="inner">
+    <span class="image">
+      <img src="{{ url_for('static', filename='images/banner.jpg') }}" alt="Banner" />
+    </span>
+    <header class="major">
+      <h1>Projects</h1>
+    </header>
+    <div class="content">
+      <p>End-to-end projects using real-world data.<br />Interactive notebooks rendered as HTML — graphs, tables, and togglable code included.</p>
+    </div>
+  </div>
+</section>
+
+<!-- One -->
+<section id="one">
+  <div class="inner">
+    <header class="major">
+      <h2>Featured Projects</h2>
+    </header>
+    <p>Combining Python, pandas, scikit-learn, and deep learning tools to explore and solve high-interest problems — in a fully explorable, shareable format.</p>
+  </div>
+</section>
+
+<!-- Two -->
+<section id="two" class="spotlights">
+
+  <!-- Project 1 -->
+  <section>
+    <a href="/projects/netflix_analysis.html" class="image narrow" target="_blank">
+      <img src="{{ url_for('static', filename='images/project1.jpg') }}" alt="Netflix Analysis" data-position="center center" />
+    </a>
+    <div class="content">
+      <div class="inner">
+        <header class="major">
+          <h3>Netflix Content Analysis</h3>
+        </header>
+        <p>Analyzes global Netflix content by genre, country, ratings, and release year. Discover what genres dominate which countries, and visualize trends over time. Interactive filtering and charts included.</p>
+        <ul class="actions">
+          <li><a href="/projects/netflix_analysis.html" class="button" target="_blank">View Project</a></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Project 2 -->
+  <section>
+    <a href="/projects/india_census.html" class="image narrow" target="_blank">
+      <img src="{{ url_for('static', filename='images/project2.jpg') }}" alt="India Census" data-position="center center" />
+    </a>
+    <div class="content">
+      <div class="inner">
+        <header class="major">
+          <h3>India Census Demographics Explorer</h3>
+        </header>
+        <p>Uses open census data to explore literacy, gender ratios, urbanization, and economic stats across Indian states. Includes sortable tables, graphs, and code toggles for exploration.</p>
+        <ul class="actions">
+          <li><a href="/projects/india_census.html" class="button" target="_blank">View Project</a></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Project 3 -->
+  <section>
+    <a href="/projects/global_co2.html" class="image narrow" target="_blank">
+      <img src="{{ url_for('static', filename='images/project3.jpg') }}" alt="CO2 Emissions" data-position="center center" />
+    </a>
+    <div class="content">
+      <div class="inner">
+        <header class="major">
+          <h3>Global CO₂ Emissions Tracker</h3>
+        </header>
+        <p>Tracks CO₂ emissions from major countries over time. Built with Plotly and pandas, users can interact with drop-downs to compare emissions, GDP, and population trends.</p>
+        <ul class="actions">
+          <li><a href="/projects/global_co2.html" class="button" target="_blank">View Project</a></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Project 4 -->
+  <section>
+    <a href="/projects/amazon_reviews.html" class="image narrow" target="_blank">
+      <img src="{{ url_for('static', filename='images/project4.jpg') }}" alt="Amazon Reviews" data-position="center center" />
+    </a>
+    <div class="content">
+      <div class="inner">
+        <header class="major">
+          <h3>Amazon Product Review Sentiment Analysis</h3>
+        </header>
+        <p>Performs NLP on thousands of Amazon product reviews to detect sentiment and keywords. Uses word clouds, sentiment scores, and LSTM classification models. Code cells can be toggled for learners.</p>
+        <ul class="actions">
+          <li><a href="/projects/amazon_reviews.html" class="button" target="_blank">View Project</a></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+</section>
+
+<!-- More Coming -->
+<section id="three">
+  <div class="inner">
+    <header class="major">
+      <h2>More in Progress</h2>
+    </header>
+    <p>New projects coming up — on healthcare prediction, image classification, and generative AI. Stay tuned!</p>
+  </div>
+</section>
+
 {% endblock %}
