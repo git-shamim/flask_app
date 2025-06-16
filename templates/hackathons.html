@@ -1,8 +1,126 @@
 {% extends 'base.html' %}
 
 {% block title %}Hackathons{% endblock %}
-{% block header %}Hackathons{% endblock %}
+
+{% block header %}
+<header id="header" class="alt style2">
+  <a href="/" class="logo"><strong>Shamim</strong> <span>Portfolio</span></a>
+  <nav><a href="#menu">Menu</a></nav>
+</header>
+{% endblock %}
 
 {% block content %}
-<p>Showcasing participation and achievements in data competitions and sprints.</p>
+
+<!-- Banner -->
+<section id="banner" class="style2">
+  <div class="inner">
+    <span class="image">
+      <img src="{{ url_for('static', filename='images/banner.jpg') }}" alt="Banner" />
+    </span>
+    <header class="major">
+      <h1>Hackathons</h1>
+    </header>
+    <div class="content">
+      <p>Competitive challenges built on real-world data. <br />ML and DL-powered solutions to global and local issues.</p>
+    </div>
+  </div>
+</section>
+
+<!-- One -->
+<section id="one">
+  <div class="inner">
+    <header class="major">
+      <h2>Featured Hackathons</h2>
+    </header>
+    <p>Problem-solving through data science — from agriculture and air quality to misinformation and customer retention.</p>
+  </div>
+</section>
+
+<!-- Two -->
+<section id="two" class="spotlights">
+
+  <!-- Hackathon 1 -->
+  <section>
+    <a href="#" class="image narrow">
+      <img src="{{ url_for('static', filename='images/hack1.jpg') }}" alt="Crop Yield Prediction" data-position="center center" />
+    </a>
+    <div class="content">
+      <div class="inner">
+        <header class="major">
+          <h3>Crop Yield Prediction – India</h3>
+        </header>
+        <p>Used historical crop, rainfall, and soil data from Indian agricultural departments to predict yield and suggest optimal crops. Empowering farmers with insights to maximize output.</p>
+        <ul class="actions">
+          <li><a href="#" class="button">View Project</a></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Hackathon 2 -->
+  <section>
+    <a href="#" class="image narrow">
+      <img src="{{ url_for('static', filename='images/hack2.jpg') }}" alt="Air Quality Forecasting" data-position="center center" />
+    </a>
+    <div class="content">
+      <div class="inner">
+        <header class="major">
+          <h3>Air Quality Forecasting</h3>
+        </header>
+        <p>Leveraged real-time data from CPCB (India) and global monitoring stations to predict PM2.5 and AQI levels. Deep learning models used for time-series forecasting and alerts.</p>
+        <ul class="actions">
+          <li><a href="#" class="button">View Project</a></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Hackathon 3 -->
+  <section>
+    <a href="#" class="image narrow">
+      <img src="{{ url_for('static', filename='images/hack3.jpg') }}" alt="Fake News Detection" data-position="center center" />
+    </a>
+    <div class="content">
+      <div class="inner">
+        <header class="major">
+          <h3>Fake News Detection</h3>
+        </header>
+        <p>Using NLP techniques on real-world labeled news datasets to classify news articles as fake or reliable. BERT and LSTM models deployed to detect misinformation with high accuracy.</p>
+        <ul class="actions">
+          <li><a href="#" class="button">View Project</a></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Hackathon 4 -->
+  <section>
+    <a href="#" class="image narrow">
+      <img src="{{ url_for('static', filename='images/hack4.jpg') }}" alt="Customer Churn Prediction" data-position="center center" />
+    </a>
+    <div class="content">
+      <div class="inner">
+        <header class="major">
+          <h3>Customer Churn Prediction</h3>
+        </header>
+        <p>Based on telco data and behavioral signals, this ML project identifies customers likely to churn and recommends retention strategies. Logistic Regression, XGBoost, and SHAP for insights.</p>
+        <ul class="actions">
+          <li><a href="#" class="button">View Project</a></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+</section>
+
+<!-- More Coming -->
+<section id="three">
+  <div class="inner">
+    <header class="major">
+      <h2>More Challenges Ahead</h2>
+    </header>
+    <p>Ongoing participation in data-centric hackathons across platforms like Kaggle, AIcrowd, and Zindi. New entries coming soon!</p>
+  </div>
+</section>
+
 {% endblock %}
