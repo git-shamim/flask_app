@@ -1,8 +1,126 @@
 {% extends 'base.html' %}
 
 {% block title %}Certifications{% endblock %}
-{% block header %}Certifications{% endblock %}
+
+{% block header %}
+<header id="header" class="alt style2">
+  <a href="/" class="logo"><strong>Shamim</strong> <span>Portfolio</span></a>
+  <nav><a href="#menu">Menu</a></nav>
+</header>
+{% endblock %}
 
 {% block content %}
-<p>Explore credentials across cloud, data science, and product leadership.</p>
+
+<!-- Banner -->
+<section id="banner" class="style2">
+  <div class="inner">
+    <span class="image">
+      <img src="{{ url_for('static', filename='images/banner.jpg') }}" alt="Banner" />
+    </span>
+    <header class="major">
+      <h1>Certifications</h1>
+    </header>
+    <div class="content">
+      <p>Credentials that reflect my journey in Analytics, AI, Cloud, and Software Engineering.<br />Each certification reinforces both learning and applied expertise.</p>
+    </div>
+  </div>
+</section>
+
+<!-- One -->
+<section id="one">
+  <div class="inner">
+    <header class="major">
+      <h2>Highlighted Certifications</h2>
+    </header>
+    <p>Industry-recognized credentials from premier institutions and platforms. These form the backbone of my data science and product skill set.</p>
+  </div>
+</section>
+
+<!-- Two -->
+<section id="two" class="spotlights">
+
+  <!-- Cert 1 -->
+  <section>
+    <a href="#" class="image narrow">
+      <img src="{{ url_for('static', filename='images/cert1.jpg') }}" alt="PGDBA" data-position="center center" />
+    </a>
+    <div class="content">
+      <div class="inner">
+        <header class="major">
+          <h3>Post Graduate Diploma in Business Analytics</h3>
+        </header>
+        <p>A rigorous analytics program from IISWBM with modules in statistics, R, SQL, machine learning, and business strategy.</p>
+        <ul class="actions">
+          <li><a href="#" class="button disabled">Completed</a></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Cert 2 -->
+  <section>
+    <a href="#" class="image narrow">
+      <img src="{{ url_for('static', filename='images/cert2.jpg') }}" alt="TCS AI Pro" data-position="center center" />
+    </a>
+    <div class="content">
+      <div class="inner">
+        <header class="major">
+          <h3>AI Pro-Certification – TCS iON</h3>
+        </header>
+        <p>End-to-end certification on AI tools, techniques, and applications, offered by TCS iON’s digital learning platform.</p>
+        <ul class="actions">
+          <li><a href="#" class="button disabled">Completed</a></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Cert 3 -->
+  <section>
+    <a href="#" class="image narrow">
+      <img src="{{ url_for('static', filename='images/cert3.jpg') }}" alt="HeyCoach" data-position="center center" />
+    </a>
+    <div class="content">
+      <div class="inner">
+        <header class="major">
+          <h3>DSA & System Design Certification – HeyCoach</h3>
+        </header>
+        <p>Structured learning in Data Structures, Algorithms, and scalable system design — aimed at technical interview readiness.</p>
+        <ul class="actions">
+          <li><a href="#" class="button disabled">Completed</a></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Cert 4 -->
+  <section>
+    <a href="#" class="image narrow">
+      <img src="{{ url_for('static', filename='images/cert4.jpg') }}" alt="GCP Data Engineer" data-position="center center" />
+    </a>
+    <div class="content">
+      <div class="inner">
+        <header class="major">
+          <h3>Google Cloud Certified – Associate Data Engineer</h3>
+        </header>
+        <p>Credential in building and deploying scalable data pipelines on Google Cloud Platform — including BigQuery, Pub/Sub, and Cloud Dataflow.</p>
+        <ul class="actions">
+          <li><a href="#" class="button disabled">Completed</a></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+</section>
+
+<!-- More Coming -->
+<section id="three">
+  <div class="inner">
+    <header class="major">
+      <h2>Always Learning</h2>
+    </header>
+    <p>Continued upskilling in the areas of cloud, product, AI, and design. More certifications in progress — stay tuned!</p>
+  </div>
+</section>
+
 {% endblock %}
