@@ -1,8 +1,72 @@
 {% extends 'base.html' %}
 
 {% block title %}Dashboards{% endblock %}
-{% block header %}Dashboards{% endblock %}
+
+{% block header %}
+<header id="header" class="alt style2">
+  <a href="/" class="logo"><strong>Shamim</strong> <span>Portfolio</span></a>
+  <nav><a href="#menu">Menu</a></nav>
+</header>
+{% endblock %}
 
 {% block content %}
-<p>View interactive BI dashboards for auction analytics and more.</p>
+
+<!-- Banner -->
+<section id="banner" class="style2">
+  <div class="inner">
+    <span class="image">
+      <img src="{{ url_for('static', filename='images/banner.jpg') }}" alt="Banner" />
+    </span>
+    <header class="major">
+      <h1>Dashboards</h1>
+    </header>
+    <div class="content">
+      <p>View interactive BI dashboards for auction analytics and market insights.<br />Visual explorations using Looker Studio, Power BI, and more.</p>
+    </div>
+  </div>
+</section>
+
+<!-- One -->
+<section id="one">
+  <div class="inner">
+    <header class="major">
+      <h2>Featured Dashboards</h2>
+    </header>
+    <p>Bringing data to life. These dashboards highlight trends, patterns, and real-time analytics across multiple domains.</p>
+  </div>
+</section>
+
+<!-- Two -->
+<section id="two" class="spotlights">
+
+  <!-- Dashboard Project 1 -->
+  <section>
+    <a href="https://lookerstudio.google.com/s/n1G_-CsxHI4" class="image narrow" target="_blank">
+      <img src="{{ url_for('static', filename='images/dashboard1.jpg') }}" alt="Google Search Trends Dashboard" data-position="center center" />
+    </a>
+    <div class="content">
+      <div class="inner">
+        <header class="major">
+          <h3>Google Search Trends – Indian Market</h3>
+        </header>
+        <p>This dashboard visualizes search interest for key business terms across Indian states, powered by Google Trends data. Ideal for product research, regional benchmarking, and consumer sentiment tracking.</p>
+        <ul class="actions">
+          <li><a href="https://lookerstudio.google.com/s/n1G_-CsxHI4" class="button" target="_blank">View Dashboard</a></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+</section>
+
+<!-- More to Come Section -->
+<section id="three">
+  <div class="inner">
+    <header class="major">
+      <h2>More Dashboards Coming Soon</h2>
+    </header>
+    <p>From auction insights to macroeconomic dashboards, stay tuned as I roll out more visual stories using real-world data.</p>
+  </div>
+</section>
+
 {% endblock %}
