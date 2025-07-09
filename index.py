@@ -101,7 +101,8 @@ def project_detail(project_name):
             "title": "Diabetes Risk Prediction",
             "description": "Predict whether a person is likely to have diabetes based on health metrics.",
             "details": "Uses classification algorithms with balanced datasets. Visual insights and model explanation included.",
-            "embed_url": "https://deepnote.com/embed/58bfb0e4-9979-4bbb-9a8b-6f03ee38e76c"
+            "iframe_url": "https://deepnote.com/embed/58bfb0e4-9979-4bbb-9a8b-6f03ee38e76c"
+
         }
     }
     project = projects.get(project_name)
