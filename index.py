@@ -1,24 +1,24 @@
 import os
 import logging
+import threading
+import requests
 from flask import Flask, render_template, request, redirect, flash
 from models import db, Contact
 from secrets_loader import load_config
 from flask_migrate import Migrate
 
-# Setup logging
+# ─── Setup Logging ──────────────────────────────────────────────────────────
 logging.basicConfig(level=logging.INFO)
 
-# Flask app initialization
+# ─── Flask App Initialization ───────────────────────────────────────────────
 app = Flask(__name__)
 app.config.update(load_config())
 
-# Initialize SQLAlchemy
+# ─── Database Initialization ────────────────────────────────────────────────
 db.init_app(app)
-
-# ─── Migrations ─────────────────────────────────────────────────────────────
 migrate = Migrate(app, db)
 
-# Ensure tables exist on startup
+# ─── Ensure Tables Exist ────────────────────────────────────────────────────
 with app.app_context():
     try:
         db.create_all()
@@ -26,9 +26,25 @@ with app.app_context():
     except Exception as e:
         app.logger.error(f"Could not create tables: {e}")
 
-# Routes
+# ─── App Warm-Up Function ───────────────────────────────────────────────────
+def warm_up_services():
+    urls = [
+        "https://documentquery-bqcmvvkyzna4hszxpq2855.streamlit.app",
+        "https://resume-scanner-927330113220.asia-southeast1.run.app",
+        "https://food-calorie-estimator-927330113220.asia-southeast1.run.app",
+        # Add more app URLs as needed
+    ]
+    for url in urls:
+        try:
+            requests.get(url, timeout=3)
+            app.logger.info(f"Warmed up {url}")
+        except Exception as e:
+            app.logger.warning(f"Warm-up failed for {url}: {e}")
+
+# ─── Routes ─────────────────────────────────────────────────────────────────
 @app.route('/')
 def home():
+    threading.Thread(target=warm_up_services).start()
     return render_template('index.html')
 
 @app.route('/projects')
@@ -77,7 +93,7 @@ def submit_contact():
 
     return redirect('/#contact')
 
-# Main entrypoint
+# ─── Entrypoint ─────────────────────────────────────────────────────────────
 if __name__ == '__main__':
     port = int(os.environ.get("PORT", 8080))
     app.run(host='0.0.0.0', port=port, debug=False)
