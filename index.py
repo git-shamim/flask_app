@@ -92,7 +92,6 @@ def submit_contact():
 
     return redirect('/#contact')
 
-
 # ─── Dynamic Project Detail Route ───────────────────────────────────────────
 @app.route('/projects/<project_name>')
 def project_detail(project_name):
@@ -102,15 +101,12 @@ def project_detail(project_name):
             "description": "Predict whether a person is likely to have diabetes based on health metrics.",
             "details": "Uses classification algorithms with balanced datasets. Visual insights and model explanation included.",
             "iframe_url": "https://deepnote.com/embed/58bfb0e4-9979-4bbb-9a8b-6f03ee38e76c"
-
         }
     }
     project = projects.get(project_name)
     if not project:
         return render_template("404.html"), 404
     return render_template("project_detail.html", **project)
-
-
 
 # ─── Dynamic Playground Project Route ───────────────────────────────────────
 @app.route('/playground/<project_name>')
@@ -137,7 +133,6 @@ def playground_project(project_name):
         return render_template("404.html"), 404
     return render_template("playground_project.html", **project)
 
-
 # ─── Dynamic Dashboard Route ────────────────────────────────────────────────
 @app.route('/dashboards/<dashboard_name>')
 def dashboard_view(dashboard_name):
@@ -152,7 +147,6 @@ def dashboard_view(dashboard_name):
     if not dashboard:
         return render_template("404.html"), 404
     return render_template("dashboard_view.html", **dashboard)
-
 
 # ─── Dynamic Blog Article Route ─────────────────────────────────────────────
 @app.route('/blogs/<blog_slug>')
@@ -169,7 +163,3 @@ def blog_article(blog_slug):
         return render_template("404.html"), 404
     return render_template("blog_article.html", **blog)
 
-# ─── Entrypoint ─────────────────────────────────────────────────────────────
-if __name__ == '__main__':
-    port = int(os.environ.get("PORT", 8080))
-    app.run(host='0.0.0.0', port=port, debug=False)
