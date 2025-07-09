@@ -93,6 +93,39 @@ def submit_contact():
 
     return redirect('/#contact')
 
+# ─── Dynamic Playground App Route ───────────────────────────────────────────
+@app.route('/playground/<project_name>')
+def playground_project(project_name):
+    projects = {
+        "document-query": {
+            "title": "Document Query Chatbot",
+            "description": "Upload PDFs and ask questions using a GenAI chatbot.",
+            "url": "https://documentquery-bqcmvvkyzna4hszxpq2855.streamlit.app"
+        },
+        "resume-scanner": {
+            "title": "Resume Scanner",
+            "description": "Upload your resume and job description for a match score and feedback.",
+            "url": "https://resume-scanner-927330113220.asia-southeast1.run.app"
+        },
+        "food-calorie-estimator": {
+            "title": "Food Calorie Estimator",
+            "description": "Upload a food image and get calorie predictions + dietary tips.",
+            "url": "https://food-calorie-estimator-927330113220.asia-southeast1.run.app"
+        }
+        # Add more mappings as needed
+    }
+
+    project = projects.get(project_name)
+    if not project:
+        return render_template("404.html"), 404
+
+    return render_template(
+        "playground_project.html",
+        title=project["title"],
+        description=project["description"],
+        embed_url=project["url"]
+    )
+
 # ─── Entrypoint ─────────────────────────────────────────────────────────────
 if __name__ == '__main__':
     port = int(os.environ.get("PORT", 8080))
