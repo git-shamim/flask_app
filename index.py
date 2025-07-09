@@ -152,14 +152,24 @@ def dashboard_view(dashboard_name):
 @app.route('/blogs/<blog_slug>')
 def blog_article(blog_slug):
     blogs = {
-        "p-value-what-why": {
-            "title": "What is a p-value?",
-            "description": "Understand what a p-value actually means and how it's used.",
-            "url": "https://medium.com/@shamim.ahmed2017/p-value-what-why-f5cc9f2894a0"
-        }
+        'p-value-what-why': {
+            'title': 'What is a p-value?',
+            'description': 'Understanding how to measure statistical significance.',
+            'medium_url': 'https://medium.com/@yourusername/p-value-article-url'
+        },
+        # Add more blog entries here
     }
+
     blog = blogs.get(blog_slug)
     if not blog:
-        return render_template("404.html"), 404
-    return render_template("blog_article.html", **blog)
+        abort(404)
+
+    return render_template('blog_article.html', **blog)
+
+
+
+if __name__ == '__main__':
+    port = int(os.environ.get("PORT", 8080))
+    print(f"👉 Starting app on port {port}")
+    app.run(host='0.0.0.0', port=port, debug=False)
 
