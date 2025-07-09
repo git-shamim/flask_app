@@ -93,7 +93,7 @@ def submit_contact():
 
     return redirect('/#contact')
 
-# ─── Dynamic Playground App Route ───────────────────────────────────────────
+# ─── Dynamic Playground Project Route ───────────────────────────────────────
 @app.route('/playground/<project_name>')
 def playground_project(project_name):
     projects = {
@@ -112,7 +112,6 @@ def playground_project(project_name):
             "description": "Upload a food image and get calorie predictions + dietary tips.",
             "url": "https://food-calorie-estimator-927330113220.asia-southeast1.run.app"
         }
-        # Add more mappings as needed
     }
 
     project = projects.get(project_name)
@@ -124,6 +123,29 @@ def playground_project(project_name):
         title=project["title"],
         description=project["description"],
         embed_url=project["url"]
+    )
+
+# ─── Dynamic Blog Article Route ─────────────────────────────────────────────
+@app.route('/blogs/<blog_slug>')
+def blog_article(blog_slug):
+    blogs = {
+        "p-value-what-why": {
+            "title": "What is a p-value?",
+            "description": "Understand what a p-value actually means and how it's used.",
+            "url": "https://medium.com/@shamim.ahmed2017/p-value-what-why-f5cc9f2894a0"
+        }
+        # Add more blogs as needed
+    }
+
+    blog = blogs.get(blog_slug)
+    if not blog:
+        return render_template("404.html"), 404
+
+    return render_template(
+        "blog_article.html",
+        title=blog["title"],
+        description=blog["description"],
+        medium_url=blog["url"]
     )
 
 # ─── Entrypoint ─────────────────────────────────────────────────────────────

@@ -36,14 +36,14 @@
   </div>
 </section>
 
-<!-- Two -->
+<!-- Two: Blog Cards -->
 <section id="two" class="spotlights">
 
-    <section>
-      <a href="https://medium.com/@shamim.ahmed2017/p-value-what-why-f5cc9f2894a0" class="image narrow" target="_blank">
-        <img src="{{ url_for('static', filename='images/blog1.jpg') }}" alt="" data-position="center center" />
-      </a>
-
+  <!-- Blog Post: p-value -->
+  <section>
+    <a href="{{ url_for('blog_article', blog_slug='p-value-what-why') }}" class="image narrow">
+      <img src="{{ url_for('static', filename='images/blog1.jpg') }}" alt="p-value blog" data-position="center center" />
+    </a>
     <div class="content">
       <div class="inner">
         <header class="major">
@@ -51,12 +51,13 @@
         </header>
         <p>The p-value helps you decide whether the effect you observed is statistically significant or just happened by random chance. The p-value gives you a number between 0 and 1 that tells you how surprising your results are.</p>
         <ul class="actions">
-          <li><a href="https://medium.com/@shamim.ahmed2017/p-value-what-why-f5cc9f2894a0" class="button" target="_blank">Learn more</a></li>
+          <li><a href="{{ url_for('blog_article', blog_slug='p-value-what-why') }}" class="button">Read More</a></li>
         </ul>
       </div>
     </div>
   </section>
 
+  <!-- Add more blog cards below as needed -->
 
 </section>
 
@@ -69,6 +70,5 @@
     <p>New blog posts are in the works — from GenAI experiments to platform playbooks, stay tuned for more practical product and data insights.</p>
   </div>
 </section>
-
 
 {% endblock %}
