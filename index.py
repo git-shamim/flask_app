@@ -32,7 +32,6 @@ def warm_up_services():
         "https://documentquery-bqcmvvkyzna4hszxpq2855.streamlit.app",
         "https://resume-scanner-927330113220.asia-southeast1.run.app",
         "https://food-calorie-estimator-927330113220.asia-southeast1.run.app",
-        # Add more app URLs as needed
     ]
     for url in urls:
         try:
@@ -41,7 +40,7 @@ def warm_up_services():
         except Exception as e:
             app.logger.warning(f"Warm-up failed for {url}: {e}")
 
-# ─── Routes ─────────────────────────────────────────────────────────────────
+# ─── Static Routes ──────────────────────────────────────────────────────────
 @app.route('/')
 def home():
     threading.Thread(target=warm_up_services).start()
@@ -73,8 +72,8 @@ def hackathons():
 
 @app.route('/submit_contact', methods=['POST'])
 def submit_contact():
-    name    = request.form.get("name", "").strip()
-    email   = request.form.get("email", "").strip()
+    name = request.form.get("name", "").strip()
+    email = request.form.get("email", "").strip()
     message = request.form.get("message", "").strip()
 
     if not name or not email:
@@ -92,6 +91,25 @@ def submit_contact():
         flash("Sorry, something went wrong.", "error")
 
     return redirect('/#contact')
+
+
+# ─── Dynamic Project Detail Route ───────────────────────────────────────────
+@app.route('/projects/<project_name>')
+def project_detail(project_name):
+    projects = {
+        "diabetes-prediction": {
+            "title": "Diabetes Risk Prediction",
+            "description": "Predict whether a person is likely to have diabetes based on health metrics.",
+            "details": "Uses classification algorithms with balanced datasets. Visual insights and model explanation included.",
+            "embed_url": "https://deepnote.com/embed/58bfb0e4-9979-4bbb-9a8b-6f03ee38e76c"
+        }
+    }
+    project = projects.get(project_name)
+    if not project:
+        return render_template("404.html"), 404
+    return render_template("project_detail.html", **project)
+
+
 
 # ─── Dynamic Playground Project Route ───────────────────────────────────────
 @app.route('/playground/<project_name>')
@@ -113,17 +131,27 @@ def playground_project(project_name):
             "url": "https://food-calorie-estimator-927330113220.asia-southeast1.run.app"
         }
     }
-
     project = projects.get(project_name)
     if not project:
         return render_template("404.html"), 404
+    return render_template("playground_project.html", **project)
 
-    return render_template(
-        "playground_project.html",
-        title=project["title"],
-        description=project["description"],
-        embed_url=project["url"]
-    )
+
+# ─── Dynamic Dashboard Route ────────────────────────────────────────────────
+@app.route('/dashboards/<dashboard_name>')
+def dashboard_view(dashboard_name):
+    dashboards = {
+        "search-trends-india": {
+            "title": "Google Search Trends in India",
+            "description": "Search interest for key business terms across Indian states.",
+            "url": "https://lookerstudio.google.com/s/n1G_-CsxHI4"
+        }
+    }
+    dashboard = dashboards.get(dashboard_name)
+    if not dashboard:
+        return render_template("404.html"), 404
+    return render_template("dashboard_view.html", **dashboard)
+
 
 # ─── Dynamic Blog Article Route ─────────────────────────────────────────────
 @app.route('/blogs/<blog_slug>')
@@ -134,19 +162,11 @@ def blog_article(blog_slug):
             "description": "Understand what a p-value actually means and how it's used.",
             "url": "https://medium.com/@shamim.ahmed2017/p-value-what-why-f5cc9f2894a0"
         }
-        # Add more blogs as needed
     }
-
     blog = blogs.get(blog_slug)
     if not blog:
         return render_template("404.html"), 404
-
-    return render_template(
-        "blog_article.html",
-        title=blog["title"],
-        description=blog["description"],
-        medium_url=blog["url"]
-    )
+    return render_template("blog_article.html", **blog)
 
 # ─── Entrypoint ─────────────────────────────────────────────────────────────
 if __name__ == '__main__':

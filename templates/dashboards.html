@@ -36,27 +36,28 @@
   </div>
 </section>
 
-<!-- Two -->
+<!-- Two: Dashboards List -->
 <section id="two" class="spotlights">
 
-  <!-- Dashboard Project 1 -->
+  <!-- Dashboard 1 -->
   <section>
-    <a href="https://lookerstudio.google.com/s/n1G_-CsxHI4" class="image narrow" target="_blank">
+    <a href="{{ url_for('dashboard_view', dashboard_name='search-trends-india') }}" class="image narrow">
       <img src="{{ url_for('static', filename='images/dashboard1.jpg') }}" alt="Google Search Trends Dashboard" data-position="center center" />
     </a>
     <div class="content">
       <div class="inner">
         <header class="major">
-          <h3>Google Search Trends in Indian (Looker Studio)</h3>
+          <h3>Google Search Trends in India (Looker Studio)</h3>
         </header>
         <p>This dashboard visualizes search interest for key business terms across Indian states, powered by Google Trends data. Ideal for product research, regional benchmarking, and consumer sentiment tracking.</p>
         <ul class="actions">
-          <li><a href="https://lookerstudio.google.com/s/n1G_-CsxHI4" class="button" target="_blank">View Dashboard</a></li>
+          <li><a href="{{ url_for('dashboard_view', dashboard_name='search-trends-india') }}" class="button">View Dashboard</a></li>
         </ul>
       </div>
     </div>
   </section>
 
+  <!-- Add more dashboards here as needed -->
 </section>
 
 <!-- More to Come Section -->

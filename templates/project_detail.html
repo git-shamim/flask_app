@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ title }} | Project Details{% endblock %}
+
+{% block header %}
+<header id="header" class="alt style2">
+  <a href="/" class="logo"><strong>Shamim</strong> <span>Portfolio</span></a>
+  <nav><a href="#menu">Menu</a></nav>
+</header>
+{% endblock %}
+
+{% block content %}
+
+<!-- Banner -->
+<section id="banner" class="style2">
+  <div class="inner">
+    <span class="image">
+      <img src="{{ url_for('static', filename='images/banner.jpg') }}" alt="Banner" />
+    </span>
+    <header class="major">
+      <h1>{{ title }}</h1>
+    </header>
+    <div class="content">
+      <p>{{ description }}</p>
+    </div>
+  </div>
+</section>
+
+<!-- Project Iframe -->
+<section id="one">
+  <div class="inner">
+    <header class="major">
+      <h2>Interactive Notebook</h2>
+    </header>
+    <p>{{ details }}</p>
+    <div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;">
+      <iframe src="{{ iframe_url }}" style="position:absolute;top:0;left:0;width:100%;height:100%;" frameborder="0" allowfullscreen></iframe>
+    </div>
+  </div>
+</section>
+
+{% endblock %}
