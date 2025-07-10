@@ -1,0 +1,26 @@
+[
+  {
+    "slug": "flattening-an-image",
+    "title": "What Does Flattening an Image Mean?",
+    "description": "From pixels to prediction — why flattening is essential in neural networks.",
+    "medium_url": "https://medium.com/@shamim.ahmed2017/from-image-to-insight-what-does-flattening-an-image-mean-and-why-is-it-essential-d4c319ec1c5e",
+    "markdown_file": "flattening.md",
+    "image": "images/blog3.jpg"
+  },
+  {
+    "slug": "gradient-descent-explained",
+    "title": "Gradient Descent Explained Visually",
+    "description": "Visual and code walkthrough to understand how models learn using gradient descent.",
+    "medium_url": "https://medium.com/@shamim.ahmed2017/gradient-descent-explained-visually-from-concept-to-code-3eff96a55ea4",
+    "markdown_file": "gradient_descent.md",
+    "image": "images/blog2.jpg"
+  },
+  {
+    "slug": "p-value-what-why",
+    "title": "What is a p-value?",
+    "description": "A simple explanation of how p-values help assess statistical significance.",
+    "medium_url": "https://medium.com/@shamim.ahmed2017/p-value-what-why-f5cc9f2894a0",
+    "markdown_file": "p_value.md",
+    "image": "images/blog1.jpg"
+  }
+]

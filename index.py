@@ -6,6 +6,8 @@ from flask import Flask, render_template, request, redirect, flash
 from models import db, Contact
 from secrets_loader import load_config
 from flask_migrate import Migrate
+import json
+import markdown
 
 # ─── Setup Logging ──────────────────────────────────────────────────────────
 logging.basicConfig(level=logging.INFO)
@@ -58,9 +60,20 @@ def playground():
 def dashboards():
     return render_template('dashboards.html')
 
+# @app.route('/blogs')
+# def blogs():
+#     return render_template('blogs.html')
+
 @app.route('/blogs')
 def blogs():
-    return render_template('blogs.html')
+    try:
+        with open('static/data/blogs.json') as f:
+            blogs_data = json.load(f)
+    except Exception as e:
+        app.logger.error(f"Error loading blogs.json: {e}")
+        blogs_data = []
+    return render_template('blogs.html', blogs=blogs_data)
+
 
 @app.route('/certifications')
 def certifications():
@@ -154,19 +167,59 @@ def dashboard_view(dashboard_name):
 
 
 # ─── Dynamic Blog Article Route ─────────────────────────────────────────────
+# @app.route('/blogs/<blog_slug>')
+# def blog_article(blog_slug):
+#     blogs = {
+#         "p-value-what-why": {
+#             "title": "What is a p-value?",
+#             "description": "Understand what a p-value actually means and how it's used.",
+#             "url": "https://medium.com/@shamim.ahmed2017/p-value-what-why-f5cc9f2894a0"
+#         }
+#     }
+#     blog = blogs.get(blog_slug)
+#     if not blog:
+#         return render_template("404.html"), 404
+#     return render_template("blog_article.html", **blog)
+
 @app.route('/blogs/<blog_slug>')
 def blog_article(blog_slug):
-    blogs = {
-        "p-value-what-why": {
-            "title": "What is a p-value?",
-            "description": "Understand what a p-value actually means and how it's used.",
-            "url": "https://medium.com/@shamim.ahmed2017/p-value-what-why-f5cc9f2894a0"
-        }
-    }
-    blog = blogs.get(blog_slug)
+    # Load metadata from JSON
+    try:
+        with open('static/data/blogs.json', 'r') as f:
+            blogs = json.load(f)
+    except Exception as e:
+        app.logger.error(f"Error loading blogs.json: {e}")
+        return render_template("404.html"), 404
+
+    blog = next((b for b in blogs if b["slug"] == blog_slug), None)
     if not blog:
         return render_template("404.html"), 404
-    return render_template("blog_article.html", **blog)
+
+    # Read markdown file
+    markdown_path = os.path.join('static', 'blogs', blog['markdown_file'])
+    if not os.path.exists(markdown_path):
+        app.logger.error(f"Markdown file not found: {markdown_path}")
+        return render_template("404.html"), 404
+
+    try:
+        with open(markdown_path, 'r') as f:
+            md_content = f.read()
+            html_content = markdown.markdown(
+                md_content,
+                extensions=["fenced_code", "codehilite", "tables"]
+            )
+    except Exception as e:
+        app.logger.error(f"Error reading markdown file: {e}")
+        return render_template("404.html"), 404
+
+    return render_template(
+        "blog_article.html",
+        title=blog["title"],
+        description=blog["description"],
+        content=html_content,
+        medium_url=blog["medium_url"]
+    )
+
 
 # ─── Entrypoint ─────────────────────────────────────────────────────────────
 if __name__ == '__main__':

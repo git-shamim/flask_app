@@ -36,29 +36,26 @@
   </div>
 </section>
 
-<!-- Two: Blog Cards -->
+<!-- Two: Dynamic Blog Cards -->
 <section id="two" class="spotlights">
-
-  <!-- Blog Post: p-value -->
+  {% for blog in blogs %}
   <section>
-    <a href="{{ url_for('blog_article', blog_slug='p-value-what-why') }}" class="image narrow">
-      <img src="{{ url_for('static', filename='images/blog1.jpg') }}" alt="p-value blog" data-position="center center" />
+    <a href="{{ url_for('blog_article', blog_slug=blog.slug) }}" class="image narrow">
+      <img src="{{ url_for('static', filename=blog.image) }}" alt="{{ blog.title }}" data-position="center center" />
     </a>
     <div class="content">
       <div class="inner">
         <header class="major">
-          <h3>What is a p-value?</h3>
+          <h3>{{ blog.title }}</h3>
         </header>
-        <p>The p-value helps you decide whether the effect you observed is statistically significant or just happened by random chance. The p-value gives you a number between 0 and 1 that tells you how surprising your results are.</p>
+        <p>{{ blog.description }}</p>
         <ul class="actions">
-          <li><a href="{{ url_for('blog_article', blog_slug='p-value-what-why') }}" class="button">Read More</a></li>
+          <li><a href="{{ url_for('blog_article', blog_slug=blog.slug) }}" class="button">Read More</a></li>
         </ul>
       </div>
     </div>
   </section>
-
-  <!-- Add more blog cards below as needed -->
-
+  {% endfor %}
 </section>
 
 <!-- More to Come Section -->
