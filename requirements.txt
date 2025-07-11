@@ -1,23 +1,23 @@
 # ───── Core Flask App ─────
-Flask>=2.3,<3.0
-Flask-SQLAlchemy>=3.0,<4.0
-Flask-Migrate>=3.1,<5.0
-gunicorn>=20.1,<21.0
+Flask==2.3.3
+Flask-SQLAlchemy==3.1.1
+Flask-Migrate==4.0.5
+gunicorn==20.1.0
 
 # ───── DB and Config ─────
-psycopg2-binary>=2.9,<3.0
-python-dotenv>=1.0,<2.0
-alembic>=1.7,<2.0
+psycopg2-binary==2.9.9
+python-dotenv==1.0.1
+alembic==1.10.4
 
 # ───── PDF & Markdown ─────
-pdfplumber
+pdfplumber==0.10.2         # uses pdfminer.six under the hood
+PyMuPDF==1.23.19            # previously known as fitz; works for image/text extraction
 
-markdown>=3.3,<4.0
-pygments>=2.15,<3.0
+markdown==3.4.4
+pygments==2.16.1
 
 # ───── API Calls ─────
-requests
+requests==2.31.0
 
 # ───── GCP Secret Manager ─────
-google-cloud-secret-manager>=2.16,<3.0
-PyMuPDF
+google-cloud-secret-manager==2.16.3

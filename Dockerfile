@@ -7,7 +7,14 @@ ENV PYTHONDONTWRITEBYTECODE=1 \
 
 WORKDIR /app
 
-# Install only Python dependencies (no gcc/libpq-dev needed for psycopg2-binary)
+# Install system-level dependencies required by some Python packages
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    build-essential \
+    libpoppler-cpp-dev \
+    libgl1-mesa-glx \
+    && rm -rf /var/lib/apt/lists/*
+
+# Install Python dependencies
 COPY requirements.txt .
 RUN pip install --upgrade pip \
     && pip install --no-cache-dir -r requirements.txt
@@ -15,11 +22,16 @@ RUN pip install --upgrade pip \
 # ─── Stage 2: Final image ────────────────────────────────────────────────────
 FROM python:3.12-slim
 
-# Declare environment variables
 ENV PORT=8080 \
     PYTHONUNBUFFERED=1
 
 WORKDIR /app
+
+# Install runtime dependencies (only lightweight libs for runtime)
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    libpoppler-cpp-dev \
+    libgl1-mesa-glx \
+    && rm -rf /var/lib/apt/lists/*
 
 # Copy installed Python packages from the builder stage
 COPY --from=builder /usr/local/lib/python3.12/site-packages /usr/local/lib/python3.12/site-packages
@@ -28,14 +40,14 @@ COPY --from=builder /usr/local/bin /usr/local/bin
 # Copy application code
 COPY . .
 
-# Create and switch to non-root user
+# Create and use non-root user
 RUN addgroup --system appgroup \
- && adduser  --system --ingroup appgroup appuser \
+ && adduser --system --ingroup appgroup appuser \
  && chown -R appuser:appgroup /app
 USER appuser
 
-# Expose the application port
+# Expose port
 EXPOSE ${PORT}
 
-# Start the app with Gunicorn
+# Run app
 CMD ["gunicorn", "--bind", "0.0.0.0:8080", "index:app"]
