@@ -198,7 +198,7 @@ def document_query():
     uploaded_filenames = []
 
     if request.method == "POST":
-        uploaded_files = request.files.getlist("pdfs")
+        uploaded_files = request.files.getlist("documents")
         question = request.form.get("question", "").strip()
         app.logger.info(f"📥 Received question: {question}")
 
