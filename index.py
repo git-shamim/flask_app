@@ -2,16 +2,14 @@ import os
 import logging
 import threading
 import requests
-from flask import Flask, render_template, request, redirect, flash
-from models import db, Contact
-from secrets_loader import load_config
-from flask_migrate import Migrate
 import json
 import markdown
-import pdfplumber
+from flask import Flask, render_template, request, redirect, flash
+from flask_migrate import Migrate
+from models import db, Contact
+from secrets_loader import load_config
 from utils.groq_llm import ask_groq_llm
-from utils.pdf_reader import extract_text_from_pdf
-from PyPDF2 import PdfReader
+from utils.document_reader import extract_text  # ✅ Unified reader (PDF, Word, Excel, Text)
 
 # ─── Setup Logging ──────────────────────────────────────────────────────────
 logging.basicConfig(level=logging.INFO)
@@ -63,10 +61,6 @@ def playground():
 def dashboards():
     return render_template('dashboards.html')
 
-# @app.route('/blogs')
-# def blogs():
-#     return render_template('blogs.html')
-
 @app.route('/blogs')
 def blogs():
     try:
@@ -76,7 +70,6 @@ def blogs():
         app.logger.error(f"Error loading blogs.json: {e}")
         blogs_data = []
     return render_template('blogs.html', blogs=blogs_data)
-
 
 @app.route('/certifications')
 def certifications():
@@ -108,8 +101,6 @@ def submit_contact():
 
     return redirect('/#contact')
 
-
-# ─── Dynamic Project Detail Route ───────────────────────────────────────────
 @app.route('/projects/<project_name>')
 def project_detail(project_name):
     projects = {
@@ -125,9 +116,6 @@ def project_detail(project_name):
         return render_template("404.html"), 404
     return render_template("project_detail.html", **project)
 
-
-
-# ─── Dynamic Playground Project Route ───────────────────────────────────────
 @app.route('/playground/<project_name>')
 def playground_project(project_name):
     projects = {
@@ -152,8 +140,6 @@ def playground_project(project_name):
         return render_template("404.html"), 404
     return render_template("playground_project.html", **project)
 
-
-# ─── Dynamic Dashboard Route ────────────────────────────────────────────────
 @app.route('/dashboards/<dashboard_name>')
 def dashboard_view(dashboard_name):
     dashboards = {
@@ -168,25 +154,8 @@ def dashboard_view(dashboard_name):
         return render_template("404.html"), 404
     return render_template("dashboard_view.html", **dashboard)
 
-
-# ─── Dynamic Blog Article Route ─────────────────────────────────────────────
-# @app.route('/blogs/<blog_slug>')
-# def blog_article(blog_slug):
-#     blogs = {
-#         "p-value-what-why": {
-#             "title": "What is a p-value?",
-#             "description": "Understand what a p-value actually means and how it's used.",
-#             "url": "https://medium.com/@shamim.ahmed2017/p-value-what-why-f5cc9f2894a0"
-#         }
-#     }
-#     blog = blogs.get(blog_slug)
-#     if not blog:
-#         return render_template("404.html"), 404
-#     return render_template("blog_article.html", **blog)
-
 @app.route('/blogs/<blog_slug>')
 def blog_article(blog_slug):
-    # Load metadata from JSON
     try:
         with open('static/data/blogs.json', 'r') as f:
             blogs = json.load(f)
@@ -198,7 +167,6 @@ def blog_article(blog_slug):
     if not blog:
         return render_template("404.html"), 404
 
-    # Read markdown file
     markdown_path = os.path.join('static', 'blogs', blog['markdown_file'])
     if not os.path.exists(markdown_path):
         app.logger.error(f"Markdown file not found: {markdown_path}")
@@ -223,8 +191,7 @@ def blog_article(blog_slug):
         medium_url=blog["medium_url"]
     )
 
-
-# ─── Document Query Route ───────────────────────────────────────────────────
+# ─── Document Query ─────────────────────────────────────────────────────────
 @app.route("/playground/document-query", methods=["GET", "POST"])
 def document_query():
     answer = None
@@ -240,16 +207,15 @@ def document_query():
 
         for file in uploaded_files:
             try:
-                reader = PdfReader(file.stream)
-                text = "\n".join(page.extract_text() or "" for page in reader.pages)
-                combined_text += text
+                text = extract_text(file)
+                combined_text += f"\n{text}"
                 app.logger.info(f"📄 Extracted text from {file.filename}")
             except Exception as e:
                 app.logger.error(f"❌ Failed reading {file.filename}: {e}")
 
         if not combined_text.strip():
-            app.logger.warning("⚠️ No readable text found in uploaded PDFs.")
-            answer = "⚠️ None of the uploaded PDFs contain readable text. Please try different files."
+            app.logger.warning("⚠️ No readable text found in uploaded files.")
+            answer = "⚠️ None of the uploaded files contain readable text. Please try different files."
         else:
             try:
                 app.logger.info("🧠 Invoking Groq with extracted context...")
@@ -268,6 +234,3 @@ def document_query():
 if __name__ == '__main__':
     port = int(os.environ.get("PORT", 8080))
     app.run(host='0.0.0.0', port=port)
-
-
-

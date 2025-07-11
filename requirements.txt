@@ -9,15 +9,19 @@ psycopg2-binary>=2.9,<3.0
 python-dotenv>=1.0,<2.0
 alembic>=1.7,<2.0
 
-# ───── PDF & Markdown ─────
-pdfplumber>=0.10,<1.0
-PyMuPDF>=1.23,<1.24  # Optional
-PyPDF2>=3.0,<4.0     # You're using this
+# ───── Document Parsing ─────
+pdfplumber>=0.10,<1.0           # For scanned text from PDFs
+PyMuPDF>=1.23,<1.24             # Optional: Fast PDF processing
+PyPDF2>=3.0,<4.0                # Primary: For extracting text from PDFs
+python-docx>=1.0,<2.0           # For reading Word files (.docx)
+openpyxl>=3.1,<4.0              # For reading Excel files (.xlsx)
+
+# ───── Markdown Rendering ─────
 markdown>=3.3,<4.0
 pygments>=2.15,<3.0
 
 # ───── API Calls ─────
-requests
+requests>=2.28,<3.0
 
 # ───── GCP Secret Manager ─────
 google-cloud-secret-manager>=2.16,<3.0
