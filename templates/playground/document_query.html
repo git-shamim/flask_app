@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+
+{% block title %}Document Query | Playground{% endblock %}
+
+{% block content %}
+<section id="banner" class="style2">
+  <div class="inner">
+    <header class="major">
+      <h1>Query Any Document</h1>
+    </header>
+    <div class="content">
+      <p>Upload one or more PDFs and ask your question. Get GenAI-powered answers from your combined document content.</p>
+    </div>
+  </div>
+</section>
+
+<section id="app-view" class="wrapper">
+  <div class="inner" id="query-form">
+    <form method="POST" enctype="multipart/form-data" action="#query-form">
+      <div>
+        <label for="pdf"><strong>Upload PDFs:</strong></label><br>
+        <input type="file" name="pdfs" accept=".pdf" multiple required>
+        <small>You can upload multiple PDF files.</small>
+      </div>
+      <br>
+      <div>
+        <label for="question"><strong>Your Question:</strong></label><br>
+        <input type="text" name="question" placeholder="Type your question here..." required style="width: 100%;">
+      </div>
+      <br>
+      <button type="submit" class="button primary">Ask Now</button>
+    </form>
+
+    {% if answer %}
+      <hr>
+      <h3>Answer:</h3>
+      <p><strong>Files:</strong>
+        {% if uploaded_filenames %}
+          {{ uploaded_filenames | join(', ') }}
+        {% else %}
+          No files uploaded.
+        {% endif %}
+      </p>
+      <p><strong>Question:</strong> {{ request.form.get('question') }}</p>
+      <p><strong>Response:</strong> {{ answer }}</p>
+    {% endif %}
+  </div>
+</section>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    if (window.location.hash === "#query-form") {
+      const el = document.getElementById("query-form");
+      if (el) {
+        el.scrollIntoView({ behavior: "smooth" });
+      }
+    }
+  });
+</script>
+{% endblock %}

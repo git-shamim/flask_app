@@ -8,9 +8,14 @@ from secrets_loader import load_config
 from flask_migrate import Migrate
 import json
 import markdown
+import pdfplumber
+from utils.groq_llm import ask_groq_llm
+from utils.pdf_reader import extract_text_from_pdf
+from PyPDF2 import PdfReader
 
 # ─── Setup Logging ──────────────────────────────────────────────────────────
 logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger("index")
 
 # ─── Flask App Initialization ───────────────────────────────────────────────
 app = Flask(__name__)
@@ -20,13 +25,12 @@ app.config.update(load_config())
 db.init_app(app)
 migrate = Migrate(app, db)
 
-# ─── Ensure Tables Exist ────────────────────────────────────────────────────
 with app.app_context():
     try:
         db.create_all()
-        app.logger.info("Tables created or already exist")
+        logger.info("Tables created or already exist")
     except Exception as e:
-        app.logger.error(f"Could not create tables: {e}")
+        logger.error(f"Could not create tables: {e}")
 
 # ─── App Warm-Up Function ───────────────────────────────────────────────────
 def warm_up_services():
@@ -38,11 +42,10 @@ def warm_up_services():
     for url in urls:
         try:
             requests.get(url, timeout=3)
-            app.logger.info(f"Warmed up {url}")
+            logger.info(f"Warmed up {url}")
         except Exception as e:
-            app.logger.warning(f"Warm-up failed for {url}: {e}")
+            logger.warning(f"Warm-up failed for {url}: {e}")
 
-# ─── Static Routes ──────────────────────────────────────────────────────────
 @app.route('/')
 def home():
     threading.Thread(target=warm_up_services).start()
@@ -220,6 +223,46 @@ def blog_article(blog_slug):
         medium_url=blog["medium_url"]
     )
 
+
+# ─── Document Query Route ───────────────────────────────────────────────────
+@app.route("/playground/document-query", methods=["GET", "POST"])
+def document_query():
+    answer = None
+    uploaded_filenames = []
+
+    if request.method == "POST":
+        uploaded_files = request.files.getlist("pdfs")
+        question = request.form.get("question", "").strip()
+        app.logger.info(f"📥 Received question: {question}")
+
+        uploaded_filenames = [file.filename for file in uploaded_files]
+        combined_text = ""
+
+        for file in uploaded_files:
+            try:
+                reader = PdfReader(file.stream)
+                text = "\n".join(page.extract_text() or "" for page in reader.pages)
+                combined_text += text
+                app.logger.info(f"📄 Extracted text from {file.filename}")
+            except Exception as e:
+                app.logger.error(f"❌ Failed reading {file.filename}: {e}")
+
+        if not combined_text.strip():
+            app.logger.warning("⚠️ No readable text found in uploaded PDFs.")
+            answer = "⚠️ None of the uploaded PDFs contain readable text. Please try different files."
+        else:
+            try:
+                app.logger.info("🧠 Invoking Groq with extracted context...")
+                answer = ask_groq_llm(question, combined_text[:15000])
+            except Exception as e:
+                app.logger.error(f"❌ Groq API call failed: {e}")
+                answer = "Sorry, the GenAI model could not process your request right now."
+
+    return render_template(
+        "playground/document_query.html",
+        answer=answer,
+        uploaded_filenames=uploaded_filenames
+    )
 
 # ─── Entrypoint ─────────────────────────────────────────────────────────────
 if __name__ == '__main__':
