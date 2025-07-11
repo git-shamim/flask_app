@@ -42,7 +42,8 @@
         {% endif %}
       </p>
       <p><strong>Question:</strong> {{ request.form.get('question') }}</p>
-      <p><strong>Response:</strong> {{ answer }}</p>
+      <p><strong>Response:</strong></p>
+      <div style="white-space: pre-wrap;">{{ answer }}</div>
     {% endif %}
   </div>
 </section>
