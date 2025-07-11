@@ -10,10 +10,20 @@ def get_groq_api_key():
     print("🔐 Retrieved Groq API Key:", key[:6], "..." if key else "❌ None")
     return key
 
-def ask_groq_llm(question, context):
+def ask_groq_llm(question, context, model="auto"):
     GROQ_API_KEY = get_groq_api_key()
     if not GROQ_API_KEY:
         raise RuntimeError("❌ Groq API Key could not be retrieved or is empty.")
+
+    # Dynamic model selection based on context size
+    if model == "auto":
+        token_estimate = len(context.split())  # Rough approximation
+        if token_estimate <= 3000:
+            model = "llama3-8b-8192"
+        elif token_estimate <= 10000:
+            model = "mixtral-8x7b"
+        else:
+            model = "llama3-70b-8192"
 
     headers = {
         "Authorization": f"Bearer {GROQ_API_KEY}",
@@ -31,11 +41,11 @@ def ask_groq_llm(question, context):
                 "content": f"Context:\n{context}\n\nQuestion:\n{question}"
             }
         ],
-        "model": "mixtral-8x7b-32768"
+        "model": model
     }
 
     try:
-        print("📤 Sending request to Groq API...")
+        print(f"📤 Sending request to Groq API with model: {model}...")
         response = requests.post(
             "https://api.groq.com/openai/v1/chat/completions",
             headers=headers,
