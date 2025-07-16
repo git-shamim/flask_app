@@ -8,16 +8,28 @@ from flask import Flask, render_template, request, redirect, flash
 from flask_migrate import Migrate
 from models import db, Contact
 from secrets_loader import load_config
-from utils.groq_llm import ask_groq_llm
-from utils.document_reader import extract_text  # ✅ Unified reader (PDF, Word, Excel, Text)
 
-# ─── Setup Logging ──────────────────────────────────────────────────────────
+from playground.playground_routes import playground_bp
+
+# ─── Modular Playground Blueprints ─────────────────────────────────────────
+from playground.resume_scanner.resume_scanner_routes import resume_scanner_bp
+from playground.document_query.document_query_routes import document_query_bp
+# from playground.food_calorie_estimator.food_calorie_routes import food_calorie_bp  # optional
+
+# ─── Setup Logging ─────────────────────────────────────────────────────────
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger("index")
 
 # ─── Flask App Initialization ───────────────────────────────────────────────
 app = Flask(__name__)
 app.config.update(load_config())
+
+app.register_blueprint(playground_bp)
+
+# ─── Register Modular Blueprints ────────────────────────────────────────────
+app.register_blueprint(resume_scanner_bp)
+app.register_blueprint(document_query_bp)
+# app.register_blueprint(food_calorie_bp)  # comment if not yet implemented
 
 # ─── Database Initialization ────────────────────────────────────────────────
 db.init_app(app)
@@ -26,11 +38,11 @@ migrate = Migrate(app, db)
 with app.app_context():
     try:
         db.create_all()
-        logger.info("Tables created or already exist")
+        logger.info("✅ Tables created or already exist.")
     except Exception as e:
-        logger.error(f"Could not create tables: {e}")
+        logger.error(f"❌ Could not create tables: {e}")
 
-# ─── App Warm-Up Function ───────────────────────────────────────────────────
+# ─── App Warm-Up (Streamlit External Services) ──────────────────────────────
 def warm_up_services():
     urls = [
         "https://documentquery-bqcmvvkyzna4hszxpq2855.streamlit.app",
@@ -40,9 +52,11 @@ def warm_up_services():
     for url in urls:
         try:
             requests.get(url, timeout=3)
-            logger.info(f"Warmed up {url}")
+            logger.info(f"🔥 Warmed up: {url}")
         except Exception as e:
-            logger.warning(f"Warm-up failed for {url}: {e}")
+            logger.warning(f"⚠️ Warm-up failed for {url}: {e}")
+
+# ─── Primary Website Routes ─────────────────────────────────────────────────
 
 @app.route('/')
 def home():
@@ -67,7 +81,7 @@ def blogs():
         with open('static/data/blogs.json') as f:
             blogs_data = json.load(f)
     except Exception as e:
-        app.logger.error(f"Error loading blogs.json: {e}")
+        app.logger.error(f"❌ Error loading blogs.json: {e}")
         blogs_data = []
     return render_template('blogs.html', blogs=blogs_data)
 
@@ -96,7 +110,7 @@ def submit_contact():
         flash("Thanks! Your message was received.", "success")
     except Exception as exc:
         db.session.rollback()
-        app.logger.error(f"Error saving contact: {exc}")
+        app.logger.error(f"❌ Error saving contact: {exc}")
         flash("Sorry, something went wrong.", "error")
 
     return redirect('/#contact')
@@ -115,30 +129,6 @@ def project_detail(project_name):
     if not project:
         return render_template("404.html"), 404
     return render_template("project_detail.html", **project)
-
-@app.route('/playground/<project_name>')
-def playground_project(project_name):
-    projects = {
-        "document-query": {
-            "title": "Document Query Chatbot",
-            "description": "Upload PDFs and ask questions using a GenAI chatbot.",
-            "url": "https://documentquery-bqcmvvkyzna4hszxpq2855.streamlit.app"
-        },
-        "resume-scanner": {
-            "title": "Resume Scanner",
-            "description": "Upload your resume and job description for a match score and feedback.",
-            "url": "https://resume-scanner-927330113220.asia-southeast1.run.app"
-        },
-        "food-calorie-estimator": {
-            "title": "Food Calorie Estimator",
-            "description": "Upload a food image and get calorie predictions + dietary tips.",
-            "url": "https://food-calorie-estimator-927330113220.asia-southeast1.run.app"
-        }
-    }
-    project = projects.get(project_name)
-    if not project:
-        return render_template("404.html"), 404
-    return render_template("playground_project.html", **project)
 
 @app.route('/dashboards/<dashboard_name>')
 def dashboard_view(dashboard_name):
@@ -160,7 +150,7 @@ def blog_article(blog_slug):
         with open('static/data/blogs.json', 'r') as f:
             blogs = json.load(f)
     except Exception as e:
-        app.logger.error(f"Error loading blogs.json: {e}")
+        app.logger.error(f"❌ Error loading blogs.json: {e}")
         return render_template("404.html"), 404
 
     blog = next((b for b in blogs if b["slug"] == blog_slug), None)
@@ -180,7 +170,7 @@ def blog_article(blog_slug):
                 extensions=["fenced_code", "codehilite", "tables"]
             )
     except Exception as e:
-        app.logger.error(f"Error reading markdown file: {e}")
+        app.logger.error(f"❌ Error reading markdown file: {e}")
         return render_template("404.html"), 404
 
     return render_template(
@@ -189,45 +179,6 @@ def blog_article(blog_slug):
         description=blog["description"],
         content=html_content,
         medium_url=blog["medium_url"]
-    )
-
-# ─── Document Query ─────────────────────────────────────────────────────────
-@app.route("/playground/document-query", methods=["GET", "POST"])
-def document_query():
-    answer = None
-    uploaded_filenames = []
-
-    if request.method == "POST":
-        uploaded_files = request.files.getlist("documents")
-        question = request.form.get("question", "").strip()
-        app.logger.info(f"📥 Received question: {question}")
-
-        uploaded_filenames = [file.filename for file in uploaded_files]
-        combined_text = ""
-
-        for file in uploaded_files:
-            try:
-                text = extract_text(file)
-                combined_text += f"\n{text}"
-                app.logger.info(f"📄 Extracted text from {file.filename}")
-            except Exception as e:
-                app.logger.error(f"❌ Failed reading {file.filename}: {e}")
-
-        if not combined_text.strip():
-            app.logger.warning("⚠️ No readable text found in uploaded files.")
-            answer = "⚠️ None of the uploaded files contain readable text. Please try different files."
-        else:
-            try:
-                app.logger.info("🧠 Invoking Groq with extracted context...")
-                answer = ask_groq_llm(question, combined_text[:15000])
-            except Exception as e:
-                app.logger.error(f"❌ Groq API call failed: {e}")
-                answer = "Sorry, the GenAI model could not process your request right now."
-
-    return render_template(
-        "playground/document_query.html",
-        answer=answer,
-        uploaded_filenames=uploaded_filenames
     )
 
 # ─── Entrypoint ─────────────────────────────────────────────────────────────
