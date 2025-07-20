@@ -49,4 +49,4 @@ USER appuser
 EXPOSE ${PORT}
 
 # Launch main Flask app
-CMD ["gunicorn", "--bind", "0.0.0.0:8080", "index:app"]
+CMD ["gunicorn", "--bind", "0.0.0.0:8080", "--log-level=debug", "index:app"]
