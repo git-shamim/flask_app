@@ -1,10 +1,56 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'base.html' %}
+{% block title %}Calorie Estimator | Playground{% endblock %}
 
-</body>
-</html>
+{% block content %}
+<section id="banner" class="style2">
+  <div class="inner">
+    <header class="major">
+      <h1>Food Calorie Estimator</h1>
+    </header>
+    <div class="content">
+      <p>Upload a food image and get calorie estimates, health evaluations, and suggestions to make your meal better.</p>
+    </div>
+  </div>
+</section>
+
+<section class="wrapper" id="calorie-form">
+  <div class="inner">
+    <form method="POST" enctype="multipart/form-data" action="#calorie-form">
+      <div>
+        <label for="image"><strong>Upload Food Image:</strong></label><br>
+        <input type="file" name="image" accept=".jpg,.jpeg,.png" required>
+      </div>
+      <br>
+      <div>
+        <label><strong>Edit/Confirm Food Name:</strong></label><br>
+        <input type="text" name="manual_food_name" placeholder="e.g. Butter Chicken" style="width: 100%;">
+      </div>
+      <br>
+      <button type="submit" class="button primary">Estimate Now</button>
+    </form>
+
+    {% if result %}
+      <hr>
+      {% if result.error %}
+        <p><strong>Error:</strong> {{ result.error }}</p>
+      {% else %}
+        <p><strong>File:</strong> {{ uploaded_filename }}</p>
+        {% if result.detection %}
+          <p><strong>Detection:</strong> {{ result.detection }}</p>
+        {% endif %}
+        {% if result.caption %}
+          <p><strong>Image Caption:</strong> {{ result.caption }}</p>
+        {% endif %}
+
+        <h3>🍽️ Food: {{ result.food_name }}</h3>
+
+        <h4>🔥 Calorie Breakdown</h4>
+        <p style="white-space: pre-wrap;">{{ result.calories }}</p>
+
+        <h4>❤️ Health Evaluation</h4>
+        <p style="white-space: pre-wrap;">{{ result.health_eval }}</p>
+      {% endif %}
+    {% endif %}
+  </div>
+</section>
+{% endblock %}

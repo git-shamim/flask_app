@@ -1,10 +1,67 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'base.html' %}
 
-</body>
-</html>
+{% block title %}Resume Scanner | Playground{% endblock %}
+
+{% block content %}
+<section id="banner" class="style2">
+  <div class="inner">
+    <header class="major">
+      <h1>Resume Fitment Scanner</h1>
+    </header>
+    <div class="content">
+      <p>Upload your resume and provide the job description (upload or paste) to get a GenAI-powered fitment score and improvement tips.</p>
+    </div>
+  </div>
+</section>
+
+<section id="app-view" class="wrapper">
+  <div class="inner" id="resume-form">
+    <form method="POST" enctype="multipart/form-data" action="#resume-form">
+      <div>
+        <label for="resume"><strong>Upload Resume (PDF or DOCX):</strong></label><br>
+        <input type="file" name="resume" accept=".pdf,.doc,.docx" required>
+      </div>
+      <br>
+
+      <div>
+        <label for="job_description_file"><strong>Upload Job Description (optional):</strong></label><br>
+        <input type="file" name="job_description_file" accept=".pdf,.doc,.docx">
+      </div>
+      <p style="text-align: center;">— OR —</p>
+
+      <div>
+        <label for="job_description_text"><strong>Paste Job Description:</strong></label><br>
+        <textarea name="job_description_text" rows="6" placeholder="Paste the job description here..." style="width: 100%;"></textarea>
+      </div>
+      <br>
+
+      <button type="submit" class="button primary">Analyze Fitment</button>
+    </form>
+
+    {% if result %}
+      <hr>
+      <h3>Fitment Results</h3>
+      <p><strong>Resume File:</strong> {{ result.resume_filename }}</p>
+      <p><strong>Job Description Source:</strong> {{ result.jd_filename if result.jd_filename else "Pasted Text" }}</p>
+      <p><strong>Fitment Score:</strong> {{ result.score }}%</p>
+      <p><strong>Insights:</strong></p>
+      <div style="white-space: pre-wrap;">{{ result.feedback }}</div>
+    {% elif error %}
+      <hr>
+      <h3 style="color: red;">Error</h3>
+      <p>{{ error }}</p>
+    {% endif %}
+  </div>
+</section>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    if (window.location.hash === "#resume-form") {
+      const el = document.getElementById("resume-form");
+      if (el) {
+        el.scrollIntoView({ behavior: "smooth" });
+      }
+    }
+  });
+</script>
+{% endblock %}
