@@ -1,13 +1,13 @@
 # ─── Stage 1: Build dependencies ─────────────────────────────────────────────
 FROM python:3.12-slim AS builder
 
-# Prevent Python from writing .pyc files and enable unbuffered logging
 ENV PYTHONDONTWRITEBYTECODE=1 \
     PYTHONUNBUFFERED=1
 
-WORKDIR /app
+# Set working directory to FlaskApp (your actual Flask app root)
+WORKDIR /app/FlaskApp
 
-# Install system-level dependencies required by some Python packages
+# Install system-level dependencies
 RUN apt-get update && apt-get install -y --no-install-recommends \
     build-essential \
     libpoppler-cpp-dev \
@@ -15,7 +15,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     && rm -rf /var/lib/apt/lists/*
 
 # Install Python dependencies
-COPY requirements.txt .
+COPY FlaskApp/requirements.txt .
 RUN pip install --upgrade pip \
     && pip install --no-cache-dir -r requirements.txt
 
@@ -25,29 +25,28 @@ FROM python:3.12-slim
 ENV PORT=8080 \
     PYTHONUNBUFFERED=1
 
-WORKDIR /app
+# Same working directory inside final container
+WORKDIR /app/FlaskApp
 
-# Install runtime dependencies (only lightweight libs for runtime)
+# Install runtime system dependencies
 RUN apt-get update && apt-get install -y --no-install-recommends \
     libpoppler-cpp-dev \
     libgl1-mesa-glx \
     && rm -rf /var/lib/apt/lists/*
 
-# Copy installed Python packages from the builder stage
+# Copy dependencies and binaries from builder
 COPY --from=builder /usr/local/lib/python3.12/site-packages /usr/local/lib/python3.12/site-packages
 COPY --from=builder /usr/local/bin /usr/local/bin
 
-# Copy application code
-COPY . .
+# Copy actual application code
+COPY FlaskApp/ .
 
-# Create and use non-root user
+# Create non-root user
 RUN addgroup --system appgroup \
  && adduser --system --ingroup appgroup appuser \
  && chown -R appuser:appgroup /app
 USER appuser
 
-# Expose port
 EXPOSE ${PORT}
 
-# Run app
 CMD ["gunicorn", "--bind", "0.0.0.0:8080", "index:app"]
