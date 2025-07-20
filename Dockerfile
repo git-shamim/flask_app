@@ -1,52 +1,34 @@
-# ─── Stage 1: Build dependencies ─────────────────────────────────────────────
-FROM python:3.12-slim AS builder
+# ─── Base Image ─────────────────────────────────────────────────────────────
+FROM python:3.12-slim
 
+# ─── Environment Variables ──────────────────────────────────────────────────
 ENV PYTHONDONTWRITEBYTECODE=1 \
-    PYTHONUNBUFFERED=1
+    PYTHONUNBUFFERED=1 \
+    PORT=8080
 
-# Set working directory at project root (Flask app lives here)
+# ─── Set Work Directory ─────────────────────────────────────────────────────
 WORKDIR /app
 
-# Install system-level dependencies
+# ─── System-Level Dependencies ──────────────────────────────────────────────
 RUN apt-get update && apt-get install -y --no-install-recommends \
     build-essential \
     libpoppler-cpp-dev \
     libgl1-mesa-glx \
     && rm -rf /var/lib/apt/lists/*
 
-# Copy only requirements.txt and install dependencies
+# ─── Copy Files ─────────────────────────────────────────────────────────────
 COPY requirements.txt .
 RUN pip install --upgrade pip \
-    && pip install --no-cache-dir -r requirements.txt
+ && pip install --no-cache-dir -r requirements.txt
 
-# ─── Stage 2: Final image ────────────────────────────────────────────────────
-FROM python:3.12-slim
-
-ENV PORT=8080 \
-    PYTHONUNBUFFERED=1
-
-WORKDIR /app
-
-# Install runtime system dependencies
-RUN apt-get update && apt-get install -y --no-install-recommends \
-    libpoppler-cpp-dev \
-    libgl1-mesa-glx \
-    && rm -rf /var/lib/apt/lists/*
-
-# Copy installed Python packages from builder
-COPY --from=builder /usr/local/lib/python3.12/site-packages /usr/local/lib/python3.12/site-packages
-COPY --from=builder /usr/local/bin /usr/local/bin
-
-# Copy the actual app source code
 COPY . .
 
-# Create and use non-root user
+# ─── Create Non-Root User ───────────────────────────────────────────────────
 RUN addgroup --system appgroup \
  && adduser --system --ingroup appgroup appuser \
  && chown -R appuser:appgroup /app
 USER appuser
 
+# ─── Expose and Start ───────────────────────────────────────────────────────
 EXPOSE ${PORT}
-
-# Start app using gunicorn
 CMD ["gunicorn", "--bind", "0.0.0.0:8080", "index:app"]
