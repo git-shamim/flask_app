@@ -12,9 +12,9 @@ from secrets_loader import load_config
 from playground.playground_routes import playground_bp
 
 # ─── Modular Playground Blueprints ─────────────────────────────────────────
-# from playground.resume_scanner.resume_scanner_routes import resume_scanner_bp
-# from playground.document_query.document_query_routes import document_query_bp
-# from playground.calorie_estimator.calorie_estimator_routes import calorie_estimator_bp
+from playground.resume_scanner.resume_scanner_routes import resume_scanner_bp
+from playground.document_query.document_query_routes import document_query_bp
+from playground.calorie_estimator.calorie_estimator_routes import calorie_estimator_bp
 
 # ─── Setup Logging ─────────────────────────────────────────────────────────
 logging.basicConfig(level=logging.INFO)
@@ -27,9 +27,9 @@ app.config.update(load_config())
 app.register_blueprint(playground_bp)
 
 # ─── Register Modular Blueprints ────────────────────────────────────────────
-# app.register_blueprint(resume_scanner_bp)
-# app.register_blueprint(document_query_bp)
-# app.register_blueprint(calorie_estimator_bp)
+app.register_blueprint(resume_scanner_bp)
+app.register_blueprint(document_query_bp)
+app.register_blueprint(calorie_estimator_bp)
 
 # ─── Database Initialization ────────────────────────────────────────────────
 db.init_app(app)
