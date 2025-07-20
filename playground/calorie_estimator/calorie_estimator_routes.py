@@ -1,5 +1,9 @@
+# playground/calorie_estimator/calorie_estimator_routes.py
+
 from flask import Blueprint, render_template, request, current_app
 from PIL import Image
+
+# Utility imports (adjusted path to match your structure)
 from playground.calorie_estimator.utils.genai_client import query_groq
 from playground.calorie_estimator.utils.imagenet_model import is_food_image
 from playground.calorie_estimator.utils.caption_generator import generate_caption
@@ -9,11 +13,12 @@ from playground.calorie_estimator.utils.prompts_auto import (
     get_health_evaluation_prompt
 )
 
+# Blueprint registration
 calorie_estimator_bp = Blueprint(
     'calorie_estimator_bp', __name__, template_folder='templates'
 )
 
-@calorie_estimator_bp.route("/playground/calorie-estimator", methods=["GET", "POST"])
+@calorie_estimator_bp.route("/playground/food-calorie-estimator", methods=["GET", "POST"])
 def calorie_estimator():
     result = {}
     food_name = None
@@ -22,6 +27,7 @@ def calorie_estimator():
     if request.method == "POST":
         uploaded_file = request.files.get("image")
         manual_food_name = request.form.get("manual_food_name", "").strip()
+        current_app.logger.info("📥 Received POST request to calorie estimator")
 
         if uploaded_file:
             try:
@@ -61,6 +67,8 @@ def calorie_estimator():
             except Exception as e:
                 current_app.logger.error(f"❌ Error processing image: {e}")
                 result["error"] = "Unable to process the uploaded image."
+        else:
+            result["error"] = "No image uploaded."
 
     return render_template(
         "playground/calorie_estimator.html",
