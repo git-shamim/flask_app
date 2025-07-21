@@ -1,12 +1,11 @@
 # playground/calorie_estimator/calorie_estimator_routes.py
 
+import os
 from flask import Blueprint, render_template, request, current_app
 from PIL import Image
 
-# Utility imports
 from playground.calorie_estimator.utils.genai_client import query_groq
 from playground.calorie_estimator.utils.imagenet_model import is_food_image
-from playground.calorie_estimator.utils.caption_generator import generate_caption
 from playground.calorie_estimator.utils.food_name_infer import infer_food_from_caption
 from playground.calorie_estimator.utils.prompts_auto import (
     get_calorie_estimation_prompt,
@@ -17,6 +16,9 @@ from playground.calorie_estimator.utils.prompts_auto import (
 calorie_estimator_bp = Blueprint(
     'calorie_estimator_bp', __name__, template_folder='templates'
 )
+
+# ─── Environment Flags ─────────────────────────────────────────────────────
+USE_BLIP = os.getenv("USE_BLIP", "1") == "1"
 
 @calorie_estimator_bp.route("/playground/food-calorie-estimator", methods=["GET", "POST"])
 def calorie_estimator():
@@ -43,7 +45,7 @@ def calorie_estimator():
             if is_food:
                 food_name = label
                 result["detection"] = f"✅ Detected as: {label} ({confidence:.2%} confidence)"
-            else:
+            elif USE_BLIP:
                 # Step 2: Use fallback caption + GenAI-based food inference
                 inferred_name, caption = infer_food_from_caption(image)
                 food_name = inferred_name
@@ -52,8 +54,10 @@ def calorie_estimator():
                     "inferred_food_name": inferred_name,
                     "detection": f"🧠 GenAI suggests: {inferred_name}"
                 })
+            else:
+                result["error"] = "Couldn't detect food automatically. Please enter it manually."
 
-            # Step 3: User manual override
+            # Step 3: Manual override
             if manual_food_name:
                 food_name = manual_food_name
                 result["manual_override"] = True
@@ -62,11 +66,8 @@ def calorie_estimator():
 
             # Step 4: Query Groq for calorie and health evaluation
             if food_name:
-                calorie_prompt = get_calorie_estimation_prompt(food_name)
-                result["calories"] = query_groq(calorie_prompt)
-
-                health_prompt = get_health_evaluation_prompt(food_name)
-                result["health_eval"] = query_groq(health_prompt, max_tokens=250)
+                result["calories"] = query_groq(get_calorie_estimation_prompt(food_name))
+                result["health_eval"] = query_groq(get_health_evaluation_prompt(food_name), max_tokens=250)
             else:
                 result["error"] = "Could not determine the food item."
 

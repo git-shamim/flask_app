@@ -2,15 +2,25 @@
 
 from .imagenet_model import is_food_image
 
-def detect_food_label_with_fallback(image, threshold=0.70):
+def detect_food_label_with_fallback(image, threshold: float = 0.70):
     """
-    Classifies the image using ImageNet (MobileNetV2).
-    If confidence >= threshold and food is detected, returns the label.
-    Otherwise, returns 'non-food' and prompts the user for manual input.
+    Detects food from image using ImageNet (MobileNetV2) with fallback.
+
+    Args:
+        image (PIL.Image): The input image to classify.
+        threshold (float): Confidence threshold to validate detection.
+
+    Returns:
+        Tuple[str, float, str]: (food_label or 'non-food', confidence, method_used)
     """
-    is_food, label, confidence = is_food_image(image, threshold=threshold)
+    try:
+        is_food, label, confidence = is_food_image(image, threshold=threshold)
 
-    if is_food and confidence >= threshold:
-        return label, confidence, "mobilenet"
+        if is_food:
+            return label, confidence, "mobilenet"
 
-    return "non-food", confidence, "manual"
+        return "non-food", confidence, "manual"
+
+    except Exception as e:
+        # In case the image is corrupt or the model fails
+        return "non-food", 0.0, f"error: {str(e)}"

@@ -1,13 +1,13 @@
-# utils/fitment_evaluator.py
 from sentence_transformers import SentenceTransformer, util
 import spacy
 
+# Loaded once per process
 model = SentenceTransformer('all-MiniLM-L6-v2')
 nlp = spacy.load("en_core_web_sm")
 
 def extract_skills(text):
     doc = nlp(text)
-    return set([token.text.lower() for token in doc if token.pos_ == 'NOUN' or token.pos_ == 'PROPN'])
+    return set(token.text.lower() for token in doc if token.pos_ in {"NOUN", "PROPN"})
 
 def evaluate_fitment(resume_text, jd_text):
     resume_emb = model.encode(resume_text, convert_to_tensor=True)

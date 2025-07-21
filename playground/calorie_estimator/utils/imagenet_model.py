@@ -3,11 +3,10 @@
 import numpy as np
 from tensorflow.keras.applications import mobilenet_v2
 from tensorflow.keras.preprocessing import image
+from tensorflow.keras.models import load_model
+import logging
 
-# Load MobileNetV2 model pretrained on ImageNet
-mobilenet = mobilenet_v2.MobileNetV2(weights="imagenet")
-
-# Set of food-related keywords to filter predictions
+# Food-related keywords (extended with Indian foods too)
 FOOD_KEYWORDS = {
     "pizza", "sandwich", "burger", "hotdog", "burrito", "taco",
     "salad", "soup", "noodles", "spaghetti", "cake", "dessert",
@@ -15,6 +14,16 @@ FOOD_KEYWORDS = {
     "fries", "coffee", "biryani", "idli", "dosa", "samosa", "paneer",
     "chapati", "tikka", "dal", "saag", "kheer", "halwa", "poha", "ladoo"
 }
+
+# Lazy loader for the model
+_mobilenet_model = None
+
+def get_mobilenet_model():
+    global _mobilenet_model
+    if _mobilenet_model is None:
+        logging.info("🔄 Loading MobileNetV2 model with ImageNet weights...")
+        _mobilenet_model = mobilenet_v2.MobileNetV2(weights="imagenet")
+    return _mobilenet_model
 
 def classify_with_imagenet(pil_image, top_k=3):
     """
@@ -26,7 +35,8 @@ def classify_with_imagenet(pil_image, top_k=3):
     x = np.expand_dims(x, axis=0)
     x = mobilenet_v2.preprocess_input(x)
 
-    preds = mobilenet.predict(x, verbose=0)
+    model = get_mobilenet_model()
+    preds = model.predict(x, verbose=0)
     decoded = mobilenet_v2.decode_predictions(preds, top=top_k)[0]
     return decoded
 
