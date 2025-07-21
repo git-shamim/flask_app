@@ -16,19 +16,23 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libpoppler-cpp-dev \
     libgl1-mesa-glx \
     curl \
-    && rm -rf /var/lib/apt/lists/*
+ && rm -rf /var/lib/apt/lists/*
 
-# ─── Copy and Install Python Dependencies ───────────────────────────────────
+# ─── Install Python Dependencies Early for Layer Caching ────────────────────
 COPY requirements.txt .
 RUN pip install --upgrade pip \
- && pip install --no-cache-dir -r requirements.txt \
- && python -m spacy download en_core_web_sm
+ && pip install --no-cache-dir -r requirements.txt
 
-# ─── Copy App Code ──────────────────────────────────────────────────────────
+# ─── Download SpaCy Model + Preload HF Model Before Code Copy ──────────────
+# This allows caching even if app code changes
+RUN python -m spacy download en_core_web_sm
+
+# ─── Copy Application Code ──────────────────────────────────────────────────
 COPY . .
 
-# ─── Setup Hugging Face Cache Directory ─────────────────────────────────────
-RUN mkdir -p /app/hf_models
+# ─── Preload Hugging Face Model ─────────────────────────────────────────────
+RUN mkdir -p $HF_HOME \
+ && python preload_model.py
 
 # ─── Create Non-Root User ───────────────────────────────────────────────────
 RUN addgroup --system appgroup \
@@ -38,4 +42,4 @@ USER appuser
 
 # ─── Expose and Start ───────────────────────────────────────────────────────
 EXPOSE ${PORT}
-CMD ["gunicorn", "--bind", "0.0.0.0:8080", "index:app"]
+CMD ["gunicorn", "--workers", "2", "--threads", "4", "--timeout", "180", "--bind", "0.0.0.0:8080", "index:app"]
