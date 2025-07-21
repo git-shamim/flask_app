@@ -1,10 +1,3 @@
-#!/usr/bin/env python3
-"""
-manage.py
-
-CLI entrypoint for database migrations using Flask-Migrate/Alembic.
-"""
-
 import os
 import logging
 

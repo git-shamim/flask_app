@@ -40,17 +40,17 @@
 <section id="two" class="spotlights">
   {% for blog in blogs %}
   <section>
-    <a href="{{ url_for('blog_article', blog_slug=blog.slug) }}" class="image narrow">
-      <img src="{{ url_for('static', filename=blog.image) }}" alt="{{ blog.title }}" data-position="center center" />
+    <a href="{{ url_for('blogs.blog_article', blog_slug=blog['slug']) }}" class="image narrow">
+      <img src="{{ url_for('static', filename=blog['image']) }}" alt="{{ blog['title'] }}" data-position="center center" />
     </a>
     <div class="content">
       <div class="inner">
         <header class="major">
-          <h3>{{ blog.title }}</h3>
+          <h3>{{ blog['title'] }}</h3>
         </header>
-        <p>{{ blog.description }}</p>
+        <p>{{ blog['description'] }}</p>
         <ul class="actions">
-          <li><a href="{{ url_for('blog_article', blog_slug=blog.slug) }}" class="button">Read More</a></li>
+          <li><a href="{{ url_for('blogs.blog_article', blog_slug=blog.slug) }}" class="button">Read More</a></li>
         </ul>
       </div>
     </div>

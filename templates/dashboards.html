@@ -38,27 +38,26 @@
 
 <!-- Two: Dashboards List -->
 <section id="two" class="spotlights">
-
-  <!-- Dashboard 1 -->
+  {% for slug, dashboard in dashboards.items() %}
   <section>
-    <a href="{{ url_for('dashboard_view', dashboard_name='search-trends-india') }}" class="image narrow">
-      <img src="{{ url_for('static', filename='images/dashboard1.jpg') }}" alt="Google Search Trends Dashboard" data-position="center center" />
+    <a href="{{ url_for('dashboards.dashboard_view', dashboard_name=slug) }}" class="image narrow">
+      <img src="{{ url_for('static', filename=dashboard.image) }}" alt="{{ dashboard.title }}" />
     </a>
     <div class="content">
       <div class="inner">
         <header class="major">
-          <h3>Google Search Trends in India (Looker Studio)</h3>
+          <h3>{{ dashboard.title }}</h3>
         </header>
-        <p>This dashboard visualizes search interest for key business terms across Indian states, powered by Google Trends data. Ideal for product research, regional benchmarking, and consumer sentiment tracking.</p>
+        <p>{{ dashboard.description }}</p>
         <ul class="actions">
-          <li><a href="{{ url_for('dashboard_view', dashboard_name='search-trends-india') }}" class="button">View Dashboard</a></li>
+          <li><a href="{{ url_for('dashboards.dashboard_view', dashboard_name=slug) }}" class="button">View Dashboard</a></li>
         </ul>
       </div>
     </div>
   </section>
-
-  <!-- Add more dashboards here as needed -->
+  {% endfor %}
 </section>
+
 
 <!-- More to Come Section -->
 <section id="three">

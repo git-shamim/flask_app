@@ -38,98 +38,26 @@
 
 <!-- Two -->
 <section id="two" class="spotlights">
-
-  <!-- Diabetes Prediction -->
+  {% for slug, project in projects.items() %}
   <section>
-    <a href="/projects/diabetes-prediction" class="image narrow">
-      <img src="{{ url_for('static', filename='images/project5.jpg') }}" alt="Diabetes Prediction" data-position="center center" />
+    <a href="{{ url_for('projects.project_detail', slug=slug) }}" class="image narrow">
+      <img src="{{ url_for('static', filename=project.image) }}" alt="{{ project.title }}" data-position="center center" />
     </a>
     <div class="content">
       <div class="inner">
         <header class="major">
-          <h3>Diabetes Risk Prediction</h3>
+          <h3>{{ project.title }}</h3>
         </header>
-        <p>Enter health metrics like age, BMI, and glucose levels to assess diabetes risk. Interactive ML model with Deepnote integration.</p>
+        <p>{{ project.description }}</p>
         <ul class="actions">
-          <li><a href="/projects/diabetes-prediction" class="button">View Project</a></li>
+          <li><a href="{{ url_for('projects.project_detail', slug=slug) }}" class="button">View Project</a></li>
         </ul>
       </div>
     </div>
   </section>
-
-<!--  &lt;!&ndash; Netflix Content Analysis &ndash;&gt;-->
-<!--  <section>-->
-<!--    <a href="/projects/netflix-analysis" class="image narrow">-->
-<!--      <img src="{{ url_for('static', filename='images/project1.jpg') }}" alt="Netflix Analysis" data-position="center center" />-->
-<!--    </a>-->
-<!--    <div class="content">-->
-<!--      <div class="inner">-->
-<!--        <header class="major">-->
-<!--          <h3>Netflix Content Analysis</h3>-->
-<!--        </header>-->
-<!--        <p>Explore global Netflix content by genre, country, ratings, and trends. Built with Python and Plotly, fully interactive.</p>-->
-<!--        <ul class="actions">-->
-<!--          <li><a href="/projects/netflix-analysis" class="button">View Project</a></li>-->
-<!--        </ul>-->
-<!--      </div>-->
-<!--    </div>-->
-<!--  </section>-->
-
-<!--  &lt;!&ndash; India Census Explorer &ndash;&gt;-->
-<!--  <section>-->
-<!--    <a href="/projects/india-census" class="image narrow">-->
-<!--      <img src="{{ url_for('static', filename='images/project2.jpg') }}" alt="India Census" data-position="center center" />-->
-<!--    </a>-->
-<!--    <div class="content">-->
-<!--      <div class="inner">-->
-<!--        <header class="major">-->
-<!--          <h3>India Census Demographics Explorer</h3>-->
-<!--        </header>-->
-<!--        <p>Analyze literacy, gender ratios, economic status, and urbanization using census data across Indian states.</p>-->
-<!--        <ul class="actions">-->
-<!--          <li><a href="/projects/india-census" class="button">View Project</a></li>-->
-<!--        </ul>-->
-<!--      </div>-->
-<!--    </div>-->
-<!--  </section>-->
-
-<!--  &lt;!&ndash; Global CO₂ Emissions &ndash;&gt;-->
-<!--  <section>-->
-<!--    <a href="/projects/global-co2" class="image narrow">-->
-<!--      <img src="{{ url_for('static', filename='images/project3.jpg') }}" alt="Global CO2" data-position="center center" />-->
-<!--    </a>-->
-<!--    <div class="content">-->
-<!--      <div class="inner">-->
-<!--        <header class="major">-->
-<!--          <h3>Global CO₂ Emissions Tracker</h3>-->
-<!--        </header>-->
-<!--        <p>Track carbon emissions by country over time. Compare emissions, GDP, and population using Plotly visualizations.</p>-->
-<!--        <ul class="actions">-->
-<!--          <li><a href="/projects/global-co2" class="button">View Project</a></li>-->
-<!--        </ul>-->
-<!--      </div>-->
-<!--    </div>-->
-<!--  </section>-->
-
-<!--  &lt;!&ndash; Amazon Review Sentiment &ndash;&gt;-->
-<!--  <section>-->
-<!--    <a href="/projects/amazon-reviews" class="image narrow">-->
-<!--      <img src="{{ url_for('static', filename='images/project4.jpg') }}" alt="Amazon Reviews" data-position="center center" />-->
-<!--    </a>-->
-<!--    <div class="content">-->
-<!--      <div class="inner">-->
-<!--        <header class="major">-->
-<!--          <h3>Amazon Product Review Sentiment Analysis</h3>-->
-<!--        </header>-->
-<!--        <p>Perform sentiment analysis on Amazon reviews using NLP and LSTM. See keyword clouds, sentiment scores, and predictions.</p>-->
-<!--        <ul class="actions">-->
-<!--          <li><a href="/projects/amazon-reviews" class="button">View Project</a></li>-->
-<!--        </ul>-->
-<!--      </div>-->
-<!--    </div>-->
-<!--  </section>-->
-
+  {% endfor %}
 </section>
+
 
 <!-- More Coming -->
 <section id="three">

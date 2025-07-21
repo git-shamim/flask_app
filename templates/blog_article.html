@@ -26,16 +26,18 @@
   </div>
 </section>
 
-<!-- Markdown Blog Content -->
+<!-- Blog Content -->
 <section id="one">
   <div class="inner">
     <div class="markdown-body" style="margin-top: 1.5em;">
       {{ content | safe }}
     </div>
 
+    {% if medium_url %}
     <p style="text-align:center; margin-top: 2em;">
       <a href="{{ medium_url }}" target="_blank" class="button">Also Read on Medium</a>
     </p>
+    {% endif %}
   </div>
 </section>
 
