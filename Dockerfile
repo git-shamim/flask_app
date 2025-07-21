@@ -31,8 +31,8 @@ RUN python -m spacy download en_core_web_sm
 COPY . .
 
 # ─── Preload Hugging Face Model ─────────────────────────────────────────────
-RUN mkdir -p $HF_HOME \
- && python preload_model.py
+#RUN mkdir -p $HF_HOME \
+# && python preload_model.py
 
 # ─── Create Non-Root User ───────────────────────────────────────────────────
 RUN addgroup --system appgroup \
